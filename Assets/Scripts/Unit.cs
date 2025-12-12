@@ -13,8 +13,15 @@ public enum UnitState
     Dead
 }
 
+[RequireComponent(typeof(NavMeshAgent))]
+
+
+
 public class Unit : MonoBehaviour
 {
+    private NavMeshAgent agent;
+    [SerializeField]
+    private SpriteRenderer selectionSprite;
     public UnitData unitData;
     int currentHealth;
     bool isSelected = false;
@@ -43,14 +50,13 @@ public class Unit : MonoBehaviour
     public Slider harvestBar;
 
 
-
-
-    void Start()
+    public void Awake()
     {
-        selIndicator = transform.GetChild(0).gameObject;
-        FindFirstObjectByType<UnitSelectionManager>().AvailableUnits.Add(this);
+        SelectionManager.Instance.AvailableUnits.Add(this);
+        agent = GetComponent<NavMeshAgent>();
         currentHealth = unitData.maxHealth;
     }
+
 
     public void AddResource(ResourceType type, int amount)
     {
