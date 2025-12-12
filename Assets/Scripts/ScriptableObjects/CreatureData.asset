@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ef752569df6d8c245bab29c5b9d6979a, type: 3}
   faction: 0
   maxHealth: 10
   maxEnergy: 50

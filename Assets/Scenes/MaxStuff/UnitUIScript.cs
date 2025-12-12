@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class UnitUIScript : MonoBehaviour
 {
 
     public bool MenuOpen;
+
+    public GameObject Grid;
 
     [SerializeField] private TextMeshProUGUI FirstTextButton;
     [SerializeField] private GameObject MenuObject;
