@@ -31,31 +31,31 @@ public class CameraMovement : MonoBehaviour
         // Edge movement
         /////////////
 
-        if (!Input.GetMouseButton(0))
-        {
-        //Move right
-            if (Input.mousePosition.x >= Screen.width - edgeBorder)
-            {
-                pos.x += panSpeed * Time.deltaTime;
-            }
+        // if (!Input.GetMouseButton(0))
+        // {
+        // //Move right
+        //     if (Input.mousePosition.x >= Screen.width - edgeBorder)
+        //     {
+        //         pos.x += panSpeed * Time.deltaTime;
+        //     }
 
-            //Move left
-            if (Input.mousePosition.x <= edgeBorder)
-            {
-                pos.x -= panSpeed * Time.deltaTime;
-            }
+        //     //Move left
+        //     if (Input.mousePosition.x <= edgeBorder)
+        //     {
+        //         pos.x -= panSpeed * Time.deltaTime;
+        //     }
 
-            if (Input.mousePosition.y >= Screen.height - edgeBorder)
-            {
-                pos.z += panSpeed * Time.deltaTime;
-            }
+        //     if (Input.mousePosition.y >= Screen.height - edgeBorder)
+        //     {
+        //         pos.z += panSpeed * Time.deltaTime;
+        //     }
 
-            if (Input.mousePosition.y <=  edgeBorder)
-            {
-                pos.z -= panSpeed * Time.deltaTime;
-            }
+        //     if (Input.mousePosition.y <=  edgeBorder)
+        //     {
+        //         pos.z -= panSpeed * Time.deltaTime;
+        //     }
 
-        }
+        // }
 
 
         ///////////////

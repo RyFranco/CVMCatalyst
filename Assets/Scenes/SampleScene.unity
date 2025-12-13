@@ -1088,6 +1088,7 @@ GameObject:
   - component: {fileID: 400209457}
   - component: {fileID: 400209461}
   - component: {fileID: 400209460}
+  - component: {fileID: 400209462}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1133,14 +1134,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400209456}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cf38d7478cff3e43905623f05135fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AvailableUnits: []
-  selectedBuilding: {fileID: 0}
-  SelectionBox: {fileID: 356278654}
 --- !u!114 &400209461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1158,6 +1156,26 @@ MonoBehaviour:
   buildingList:
   - {fileID: 4866350320822589613, guid: a1bd5147ad6720340bbf1e5226db1e9a, type: 3}
   - {fileID: 4866350320822589613, guid: d55802c622dc4c34399944f55079b980, type: 3}
+--- !u!114 &400209462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400209456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c440f8e59584044ca7287884247d058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 330585545}
+  selectionBox: {fileID: 356278654}
+  unitLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1964,10 @@ PrefabInstance:
     - target: {fileID: 7192625611929617496, guid: 4d5223ffd356a3245bddd0b6a899cc64, type: 3}
       propertyPath: m_Name
       value: Minion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7192625611929617496, guid: 4d5223ffd356a3245bddd0b6a899cc64, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8227519027250632984, guid: 4d5223ffd356a3245bddd0b6a899cc64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3722,7 +3744,7 @@ PrefabInstance:
       objectReference: {fileID: 1734329855}
     - target: {fileID: 8521537995590009789, guid: a1bd5147ad6720340bbf1e5226db1e9a, type: 3}
       propertyPath: m_VersionIndex
-      value: 555
+      value: 558
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4643,6 +4665,10 @@ PrefabInstance:
     - target: {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
       propertyPath: m_Name
       value: Unit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640302703263808049, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
       propertyPath: m_LocalPosition.x

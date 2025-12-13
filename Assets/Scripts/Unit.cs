@@ -21,14 +21,11 @@ public class Unit : MonoBehaviour
 {
     private NavMeshAgent agent;
     [SerializeField]
-    private SpriteRenderer selectionSprite;
+    private GameObject selectionSprite;
     public UnitData unitData;
     int currentHealth;
     bool isSelected = false;
-    GameObject selIndicator;
-
     public UnitState currentState { get; private set; } = UnitState.Idle;
-
     private ResourceTile currentTile;
     private Coroutine harvestingRoutine;
 
@@ -55,7 +52,28 @@ public class Unit : MonoBehaviour
         SelectionManager.Instance.AvailableUnits.Add(this);
         agent = GetComponent<NavMeshAgent>();
         currentHealth = unitData.maxHealth;
+        Debug.Log(selectionSprite);
     }
+
+    public void MoveTo(Vector3 pos)
+    {
+        agent.SetDestination(pos);
+    }
+
+    public void Select()
+    {
+        Debug.Log("Selected");
+        isSelected = true;
+        selectionSprite.SetActive(true);
+
+    }
+
+    public void Deselect()
+    {
+        isSelected = false;
+        selectionSprite.SetActive(false);
+    }
+
 
 
     public void AddResource(ResourceType type, int amount)
@@ -75,23 +93,6 @@ public class Unit : MonoBehaviour
         Debug.Log($"{name} collected {amount} {type}. Now carrying {currentInventory}/{MaxInventory}");
     }
 
-    public void Select()
-    {
-        isSelected = true;
-        selIndicator.SetActive(true);
-
-    }
-
-    public void Deselect()
-    {
-        isSelected = false;
-        selIndicator.SetActive(false);
-    }
-
-    public bool IsSelected()
-    {
-        return isSelected;
-    }
 
     public bool isInventoryFull() => currentInventory >= MaxInventory;
 
@@ -101,11 +102,12 @@ public class Unit : MonoBehaviour
     public IEnumerator TryStartHarvesting(ResourceTile tile)
     {
         Debug.Log($"Trying start harvest at {tile}");
-        if (!tile.TryAddWorker(this)){
+        if (!tile.TryAddWorker(this))
+        {
             Debug.Log($"{name} cannot harvest — tile full!");
             yield break;
         }
-        
+
         currentTile = tile;
         lastHarvestTile = tile;
         currentState = UnitState.Idle;
@@ -117,8 +119,8 @@ public class Unit : MonoBehaviour
             yield return null;
 
         harvestingRoutine = StartCoroutine(HarvestRoutine(tile));
-    
-        
+
+
 
     }
 
@@ -178,8 +180,8 @@ public class Unit : MonoBehaviour
 
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.SetDestination(townHall.transform.position);
-        
-        while(Vector3.Distance(transform.position, townHall.transform.position) > 5f) yield return null;
+
+        while (Vector3.Distance(transform.position, townHall.transform.position) > 5f) yield return null;
 
         DepositResources(townHall);
 
@@ -213,7 +215,7 @@ public class Unit : MonoBehaviour
             ResourceManager.Instance.AddResource(type, amount);
 
         }
-        
+
         carriedResources.Clear();
         currentInventory = 0;
     }
@@ -233,7 +235,7 @@ public class Unit : MonoBehaviour
         }
 
         attackTarget = null;
-    
+
         if (currentTile != null)
         {
             currentTile.RemoveWorker(this);
@@ -262,7 +264,7 @@ public class Unit : MonoBehaviour
         else if (targetBuilding != null)
         {
             Debug.Log($"{name} choose building!");
-            attackRoutine = StartCoroutine(AttackRoutine_Building(targetBuilding));   
+            attackRoutine = StartCoroutine(AttackRoutine_Building(targetBuilding));
         }
     }
 
@@ -352,8 +354,14 @@ public class Unit : MonoBehaviour
 
     private void Die()
     {
+        if (SelectionManager.Instance != null)
+        {
+            SelectionManager.Instance.AvailableUnits.Remove(this);
+            SelectionManager.Instance.SelectedUnits.Remove(this);
+        }
+
         currentState = UnitState.Dead;
-        selIndicator.SetActive(false);
+
         Destroy(gameObject);
         Debug.Log($"{name} has died!");
     }

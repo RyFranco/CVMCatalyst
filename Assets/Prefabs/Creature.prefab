@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d6aba6e9188ae4f9bd3060d9d4c035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionSprite: {fileID: 7640302703263808049}
   unitData: {fileID: 11400000, guid: 9941d3f7aa8c82242af9800f4890443c, type: 2}
   MaxInventory: 3
   playerID: 0

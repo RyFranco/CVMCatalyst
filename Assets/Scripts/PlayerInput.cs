@@ -1,0 +1,110 @@
+using UnityEngine;
+
+public class PlayerInput : MonoBehaviour
+{
+    [SerializeField]
+    private Camera cam;
+
+    [SerializeField]
+    private RectTransform selectionBox;
+
+    [SerializeField]
+    private LayerMask unitLayers;
+
+    [SerializeField]
+    private LayerMask floorLayer;
+
+    private Vector2 startMousePosition;
+
+    float mouseDownTime;
+    float dragDelay = 0.1f;
+
+    private void Update()
+    {
+        HandleSelectionInputs();
+    }
+
+
+
+    void HandleSelectionInputs()
+    {
+        if (Input.GetMouseButtonDown(0)) //when mouse is intially pressed
+        {
+            selectionBox.sizeDelta = Vector2.zero;
+            selectionBox.gameObject.SetActive(true);
+            startMousePosition = Input.mousePosition;
+            mouseDownTime = Time.time;
+        }
+        else if (Input.GetMouseButton(0) && mouseDownTime + dragDelay < Time.time) // if mouse is still being held
+        {
+            ResizeSelectionBox();
+        }
+        else if (Input.GetMouseButtonUp(0))// if mouse is let go
+        {
+            selectionBox.sizeDelta = Vector2.zero;
+            selectionBox.gameObject.SetActive(false);
+
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayers)
+                && hit.collider.TryGetComponent<Unit>(out Unit unit))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    if (SelectionManager.Instance.IsSelected(unit))
+                    {
+                        SelectionManager.Instance.Deselect(unit);
+                    }
+                    else
+                    {
+                        SelectionManager.Instance.Select(unit);
+                    }
+
+                }
+                else
+                {
+                    SelectionManager.Instance.DeselectAll();
+                    SelectionManager.Instance.Select(unit);
+                }
+
+            }
+            else if (mouseDownTime + dragDelay > Time.time)
+            {
+                SelectionManager.Instance.DeselectAll();
+            }
+
+            mouseDownTime = 0;
+
+        }
+    }
+
+
+    void ResizeSelectionBox()
+    {
+        float width = Input.mousePosition.x - startMousePosition.x;
+        float height = Input.mousePosition.y - startMousePosition.y;
+
+        selectionBox.anchoredPosition = startMousePosition + new Vector2(width / 2, height / 2);
+        selectionBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+
+        Bounds bounds = new Bounds(selectionBox.anchoredPosition, selectionBox.sizeDelta);
+
+        for (int i = 0; i < SelectionManager.Instance.AvailableUnits.Count; i++)
+        {
+            if (UnitIsInSelectionBox(cam.WorldToScreenPoint(SelectionManager.Instance.AvailableUnits[i].transform.position), bounds))
+            {
+                SelectionManager.Instance.Select(SelectionManager.Instance.AvailableUnits[i]);
+
+            }
+            else
+            {
+                SelectionManager.Instance.Deselect(SelectionManager.Instance.AvailableUnits[i]);
+
+            }
+        }
+    }
+
+    bool UnitIsInSelectionBox(Vector2 Position, Bounds Bounds)
+    {
+        return Position.x > Bounds.min.x && Position.x < Bounds.max.x
+        && Position.y > Bounds.min.y && Position.y < Bounds.max.y;
+    }
+}
