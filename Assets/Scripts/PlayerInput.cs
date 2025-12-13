@@ -44,6 +44,34 @@ public class PlayerInput : MonoBehaviour
                     return;
                 }
 
+                 // //Was enemy unit clicked?
+                Unit targetUnit = hit.collider.GetComponent<Unit>();
+                if (targetUnit != null)
+                {
+                    if (targetUnit.playerID != 0)
+                    {
+                        foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
+                        {
+                            unit.StopAllActions();
+                            unit.Attack(targetUnit);
+                        }
+                        return;
+                    }
+
+                }
+
+                //Was enemy building clicked?
+                Building targetBuilding = hit.collider.GetComponent<Building>();
+                if (targetBuilding != null)
+                {
+                    if(targetBuilding.playerID != 0)
+                    {
+                        foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
+                            unit.Attack(null, targetBuilding);
+                        return;
+
+                    }
+                }
 
                 foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
                 {
