@@ -9,10 +9,10 @@ public class PlayerInput : MonoBehaviour
     private RectTransform selectionBox;
 
     [SerializeField]
-    private LayerMask unitLayers;
+    private LayerMask unitLayer;
 
     [SerializeField]
-    private LayerMask floorLayers;
+    private LayerMask floorLayer;
 
     private Vector2 startMousePosition;
 
@@ -29,8 +29,22 @@ public class PlayerInput : MonoBehaviour
     {
         if(Input.GetMouseButton(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
         {
-            if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayers))
+            if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayer))
             {
+                
+                 //Was resource tiles clicked?
+                ResourceTile resourceTile = hit.collider.GetComponent<ResourceTile>();
+                if (resourceTile)
+                {
+                    foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
+                    {
+                        unit.StopAllActions();
+                        unit.StartCoroutine(unit.TryStartHarvesting(resourceTile));
+                    }
+                    return;
+                }
+
+
                 foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
                 {
                     unit.MoveTo(hit.point);
@@ -57,7 +71,7 @@ public class PlayerInput : MonoBehaviour
             selectionBox.sizeDelta = Vector2.zero;
             selectionBox.gameObject.SetActive(false);
 
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayers)
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayer)
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))

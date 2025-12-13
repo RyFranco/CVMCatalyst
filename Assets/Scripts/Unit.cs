@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
     private GameObject selectionSprite;
     public UnitData unitData;
     int currentHealth;
+
     bool isSelected = false;
     public UnitState currentState { get; private set; } = UnitState.Idle;
     private ResourceTile currentTile;
@@ -38,7 +39,7 @@ public class Unit : MonoBehaviour
     public int MaxInventory = 3;
     private int currentInventory = 0;
 
-    private Dictionary<ResourceType, int> carriedResources = new Dictionary<ResourceType, int>();
+    public Dictionary<ResourceType, int> carriedResources = new Dictionary<ResourceType, int>();
 
     public int playerID;
 
@@ -113,7 +114,6 @@ public class Unit : MonoBehaviour
         lastHarvestTile = tile;
         currentState = UnitState.Idle;
 
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.isStopped = false;
         agent.SetDestination(tile.transform.position);
         while (Vector3.Distance(transform.position, tile.transform.position) > 1.5f)
@@ -128,15 +128,15 @@ public class Unit : MonoBehaviour
     private IEnumerator HarvestRoutine(ResourceTile tile)
     {
         currentState = UnitState.Gathering;
-        var harvestTime = tile.baseResourceHarvestTime / unitData.harvestingSpeed;
+       
         harvestBar.value = 0f;
 
         while (tile != null && !isInventoryFull() && currentState == UnitState.Gathering)
         {
-            float elaspeTime = 0f;
 
 
             yield return new WaitForSeconds(tile.baseResourceHarvestTime / unitData.harvestingSpeed);
+            Debug.Log("Harvest 1 thing");
             tile.Harvest(this);
             if (isInventoryFull()) break;
         }
@@ -179,7 +179,6 @@ public class Unit : MonoBehaviour
     {
         currentState = UnitState.Idle;
 
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.SetDestination(townHall.transform.position);
 
         while (Vector3.Distance(transform.position, townHall.transform.position) > 5f) yield return null;
@@ -244,7 +243,6 @@ public class Unit : MonoBehaviour
         }
 
         currentState = UnitState.Idle;
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.isStopped = false;
     }
 
@@ -271,7 +269,6 @@ public class Unit : MonoBehaviour
 
     private IEnumerator AttackRoutine_Unit(Unit target)
     {
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         while (target != null && target.currentState != UnitState.Dead && currentState == UnitState.Attacking)
         {
@@ -298,7 +295,6 @@ public class Unit : MonoBehaviour
 
     private IEnumerator AttackRoutine_Building(Building target)
     {
-        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         Debug.Log($"{name} attacking building.");
 
         Collider buildingCollider = target.GetComponent<Collider>();
