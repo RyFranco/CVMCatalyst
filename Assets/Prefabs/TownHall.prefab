@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingData: {fileID: 11400000, guid: 2a0b50b9c1c8aca4b9048ada1e07378c, type: 2}
+  playerID: 0
 --- !u!114 &6625213757602397912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefabs:
   - {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
+  playerID: 0
+  UIUnitPanel: {fileID: 2606365042620681400, guid: 8b75f307bccf51840995c05ac5f37325, type: 3}
 --- !u!1 &2622124246528386213
 GameObject:
   m_ObjectHideFlags: 0

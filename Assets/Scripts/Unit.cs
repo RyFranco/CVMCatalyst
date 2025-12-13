@@ -46,6 +46,7 @@ public class Unit : MonoBehaviour
     public Canvas harvestBarCanvas;
     public Slider harvestBar;
 
+    public UnitPanelScript UnitPanelScript  { get; set; } = null;
 
     public void Awake()
     {
@@ -342,8 +343,9 @@ public class Unit : MonoBehaviour
 
     public void Damage(int amount)
     {
-
+        
         currentHealth -= amount;
+        UnitPanelScript.UpdateHealthIndicator(currentHealth/unitData.maxHealth);
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)
         {

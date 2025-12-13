@@ -921,6 +921,7 @@ MonoBehaviour:
   unitPrefabs:
   - {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
   playerID: 0
+  UIUnitPanel: {fileID: 2606365042620681400, guid: 8b75f307bccf51840995c05ac5f37325, type: 3}
 --- !u!224 &5110258757602973041 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4675264941262976885, guid: 3a5c41e282719b640962f816077445a1, type: 3}
