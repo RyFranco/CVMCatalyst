@@ -17318,7 +17318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6631378567831814247}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: CollectionSpot3
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -52573,6 +52573,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxWorkers: 3
+  spots:
+  - {fileID: 7057760580830474058}
+  - {fileID: 8049136339437947015}
+  - {fileID: 1099968173489374302}
   resourceType: 0
   baseResourceHarvestTime: 5
   resourcePerCollect: 1
@@ -52673,7 +52677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7756924209366525735}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: CollectionSpot
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -61358,7 +61362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9052433300652851691}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: CollectionSpot2
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

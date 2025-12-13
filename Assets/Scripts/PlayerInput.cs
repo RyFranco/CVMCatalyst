@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleMovementInputs()
     {
-        if(Input.GetMouseButton(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
+        if(Input.GetMouseButtonDown(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
         {
             if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayer))
             {
@@ -75,6 +75,7 @@ public class PlayerInput : MonoBehaviour
 
                 foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
                 {
+                    unit.StopAllActions();
                     unit.MoveTo(hit.point);
                 }
             }

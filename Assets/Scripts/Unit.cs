@@ -10,6 +10,7 @@ public enum UnitState
     Idle,
     Gathering,
     Attacking,
+    MovingToAction,
     Dead
 }
 
@@ -47,7 +48,7 @@ public class Unit : MonoBehaviour
     public Canvas harvestBarCanvas;
     public Slider harvestBar;
 
-    public UnitPanelScript UnitPanelScript  { get; set; } = null;
+    public UnitPanelScript UnitPanelScript { get; set; } = null;
 
     public void Awake()
     {
@@ -64,7 +65,6 @@ public class Unit : MonoBehaviour
 
     public void Select()
     {
-        Debug.Log("Selected");
         isSelected = true;
         selectionSprite.SetActive(true);
 
@@ -103,22 +103,36 @@ public class Unit : MonoBehaviour
     //HARVESTING
     public IEnumerator TryStartHarvesting(ResourceTile tile)
     {
+        //if alreadying harvesting leave
+        if (currentState == UnitState.Gathering)
+            yield break;
+
+
         Debug.Log($"Trying start harvest at {tile}");
-        if (!tile.TryAddWorker(this))
+
+        bool assigned = tile.RequestWork(this);
+
+        if (!assigned)
         {
-            Debug.Log($"{name} cannot harvest — tile full!");
+            Debug.Log($"{name} waiting for a free spot");
             yield break;
         }
 
+        //We have a spot and now assign it
         currentTile = tile;
         lastHarvestTile = tile;
-        currentState = UnitState.Idle;
+        currentState = UnitState.MovingToAction;
 
+
+        Vector3 target = tile.GetWorkerSpot(this);
         agent.isStopped = false;
-        agent.SetDestination(tile.transform.position);
-        while (Vector3.Distance(transform.position, tile.transform.position) > 1.5f)
+        agent.SetDestination(target);
+
+        while (Vector3.Distance(transform.position, target) > 1.5f)
             yield return null;
 
+
+        currentState = UnitState.Gathering;
         harvestingRoutine = StartCoroutine(HarvestRoutine(tile));
 
 
@@ -128,25 +142,39 @@ public class Unit : MonoBehaviour
     private IEnumerator HarvestRoutine(ResourceTile tile)
     {
         currentState = UnitState.Gathering;
-       
-        harvestBar.value = 0f;
+        //harvestBar.value = 0f; // STILL NEEDED TO IMPLEMENT BAR
+
 
         while (tile != null && !isInventoryFull() && currentState == UnitState.Gathering)
         {
 
+            float harvestTime = tile.baseResourceHarvestTime / unitData.harvestingSpeed;
+            float timer = 0f;
 
-            yield return new WaitForSeconds(tile.baseResourceHarvestTime / unitData.harvestingSpeed);
-            Debug.Log("Harvest 1 thing");
+
+            while (timer < harvestTime)
+            {
+                if (currentState != UnitState.Gathering || tile == null)
+                    yield break;
+
+                timer += Time.deltaTime;
+                //harvestBar.value = timer / harvestTime;
+
+                yield return null;
+            }
+
+
             tile.Harvest(this);
+
             if (isInventoryFull()) break;
         }
 
         StopAllActions();
+        tile.RemoveWorker(this);
 
         if (isInventoryFull())
         {
-            GameObject townHall = FindNearestTownHall();
-            StartCoroutine(DepositRoutine(townHall));
+            StartCoroutine(DepositRoutine(FindNearestTownHall()));
         }
     }
 
@@ -177,31 +205,31 @@ public class Unit : MonoBehaviour
 
     private IEnumerator DepositRoutine(GameObject townHall)
     {
-        currentState = UnitState.Idle;
+        currentState = UnitState.MovingToAction;
 
+        //move to townhall
+        agent.isStopped = false;
         agent.SetDestination(townHall.transform.position);
 
+        //wait till near twon hall
         while (Vector3.Distance(transform.position, townHall.transform.position) > 5f) yield return null;
 
+        //deposit resources
         DepositResources(townHall);
 
         // Resume harvesting
         if (lastHarvestTile != null)
         {
-            agent.SetDestination(lastHarvestTile.transform.position);
-            while (Vector3.Distance(transform.position, lastHarvestTile.transform.position) > 1.5f) yield return null;
+            bool assigned = lastHarvestTile.RequestWork(this);
 
-            yield return new WaitForSeconds(0.2f);
-            lastHarvestTile.RemoveWorker(this);
+            if (!assigned)
+            {
+                Debug.Log($"{name} waiting for open spot at {lastHarvestTile.name}");
+                yield break;
+            }
 
-            if (lastHarvestTile.TryAddWorker(this))
-            {
-                harvestingRoutine = StartCoroutine(HarvestRoutine(lastHarvestTile));
-            }
-            else
-            {
-                Debug.LogWarning($"{name} couldn't re-register to {lastHarvestTile.name}");
-            }
+            //worker assigned immediately, go to harvesting spot
+            StartCoroutine(TryStartHarvesting(lastHarvestTile));
         }
 
     }
@@ -339,9 +367,9 @@ public class Unit : MonoBehaviour
 
     public void Damage(int amount)
     {
-        
+
         currentHealth -= amount;
-        UnitPanelScript.UpdateHealthIndicator(currentHealth/unitData.maxHealth);
+        UnitPanelScript.UpdateHealthIndicator(currentHealth / unitData.maxHealth);
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)
         {

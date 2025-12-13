@@ -64,53 +64,7 @@ public class UnitSelectionManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
 
-                // //Was resource tiles clicked?
-                // ResourceTile resourceTile = hit.collider.GetComponent<ResourceTile>();
-                // if (resourceTile)
-                // {
-                //     foreach (Unit unit in selectedUnits)
-                //     {
-                //         unit.StopAllActions();
-                //         unit.StartCoroutine(unit.TryStartHarvesting(resourceTile));
-                //     }
-                //     return;
-                // }
-
-                // //Was enemy unit clicked?
-                // Unit targetUnit = hit.collider.GetComponent<Unit>();
-                // if (targetUnit != null)
-                // {
-                //     if (targetUnit.playerID != 0)
-                //     {
-                //         foreach (Unit unit in selectedUnits)
-                //         {
-                //             unit.StopAllActions();
-                //             unit.Attack(targetUnit);
-                //         }
-                //         return;
-                //     }
-
-                // }
-
-                //Was enemy building clicked?
-                // Building targetBuilding = hit.collider.GetComponent<Building>();
-                // if (targetBuilding != null)
-                // {
-                //     if(targetBuilding.playerID != 0)
-                //     {
-                //         foreach (Unit unit in selectedUnits)
-                //             unit.Attack(null, targetBuilding);
-                //         return;
-
-                //     }
-                // }
-
-                // //Else just move to mouse click position
-                // foreach (Unit unit in selectedUnits)
-                // {
-                //     unit.StopAllActions();
-                //     unit.GetComponent<UnitMovement>().MoveTo(hit.point);
-                // }
+              
 
 
             }
