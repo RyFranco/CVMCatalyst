@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
     private LayerMask unitLayers;
 
     [SerializeField]
-    private LayerMask floorLayer;
+    private LayerMask floorLayers;
 
     private Vector2 startMousePosition;
 
@@ -22,9 +22,22 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         HandleSelectionInputs();
+        HandleMovementInputs();
     }
 
-
+    private void HandleMovementInputs()
+    {
+        if(Input.GetMouseButton(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
+        {
+            if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayers))
+            {
+                foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
+                {
+                    unit.MoveTo(hit.point);
+                }
+            }
+        }
+    }
 
     void HandleSelectionInputs()
     {
