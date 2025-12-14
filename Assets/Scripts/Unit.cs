@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 using UnityEngine;
 using UnityEngine.AI;
@@ -48,7 +49,8 @@ public class Unit : MonoBehaviour
     public Canvas harvestBarCanvas;
     public Slider harvestBar;
 
-    public UnitPanelScript UnitPanelScript { get; set; } = null;
+    public UnitPanelScript UnitPanelScript;
+    public Animator animator;
 
     public void Awake()
     {
@@ -58,9 +60,30 @@ public class Unit : MonoBehaviour
         Debug.Log(selectionSprite);
     }
 
+    void Update()
+    {
+        if(agent.velocity.x > 1)
+        {
+            Quaternion newRotation = transform.rotation;
+            newRotation.y = 0;
+            transform.rotation = newRotation;
+        }
+        else if (agent.velocity.x < 1)
+        {
+            Quaternion newRotation = transform.rotation;
+            newRotation.y = 180;
+            transform.rotation = newRotation;
+        }
+
+        animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
+
+
+    }
+
     public void MoveTo(Vector3 pos)
     {
         agent.SetDestination(pos);
+        
     }
 
     public void Select()
@@ -133,6 +156,7 @@ public class Unit : MonoBehaviour
 
 
         currentState = UnitState.Gathering;
+        animator.SetBool("IsHarvesting",true);
         harvestingRoutine = StartCoroutine(HarvestRoutine(tile));
 
 
@@ -206,6 +230,7 @@ public class Unit : MonoBehaviour
     private IEnumerator DepositRoutine(GameObject townHall)
     {
         currentState = UnitState.MovingToAction;
+        animator.SetBool("IsHarvesting",false);
 
         //move to townhall
         agent.isStopped = false;
@@ -355,6 +380,7 @@ public class Unit : MonoBehaviour
 
     public void Heal(int amount)
     {
+        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator( ( (float)currentHealth) / ( (float)unitData.maxHealth) );
         if ((amount + currentHealth) >= unitData.maxHealth)
         {
             currentHealth = unitData.maxHealth;
@@ -362,6 +388,7 @@ public class Unit : MonoBehaviour
         else
         {
             currentHealth += amount;
+            
         }
     }
 
@@ -369,7 +396,7 @@ public class Unit : MonoBehaviour
     {
 
         currentHealth -= amount;
-        UnitPanelScript.UpdateHealthIndicator(currentHealth / unitData.maxHealth);
+        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator( ( (float)currentHealth) / ( (float)unitData.maxHealth) );
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)
         {
@@ -389,6 +416,7 @@ public class Unit : MonoBehaviour
         currentState = UnitState.Dead;
 
         Destroy(gameObject);
+        Destroy(UnitPanelScript.gameObject);
         Debug.Log($"{name} has died!");
     }
 }

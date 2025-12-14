@@ -11,8 +11,6 @@ public class UnitPanelScript : MonoBehaviour
 
     public GameObject UnitImage;
 
-    public float FakeHP; //Placeholder for hp DELETE LATER 
-
     [SerializeField] private GameObject HPBar;
     [SerializeField] private GameObject CurrentHPIndicator;
     
@@ -27,8 +25,8 @@ public class UnitPanelScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        UpdateHealthIndicator(FakeHP); //Placeholder for hp DELETE LATER 
+    {   
+
     }
 
     //When a player controlled unit takes damage, they should call this function on their given tile
@@ -36,6 +34,7 @@ public class UnitPanelScript : MonoBehaviour
     {
         if(percentHP >= 1)
         {
+            CurrentHPIndicator.transform.localScale = new Vector3(percentHP,1,1);
             HPBar.SetActive(false);
         }
         else
@@ -43,9 +42,7 @@ public class UnitPanelScript : MonoBehaviour
             HPBar.SetActive(true);
             CurrentHPIndicator.transform.localScale = new Vector3(percentHP,1,1);
         }
-
-        // IF YOU WANT HEALTHBAR TO ALWAYS BE ACTIVE REMOVE THE IF STATEMENT ABOVE AND ALLOW THIS BELOW
-        //CurrentHPIndicator.transform.localScale = new Vector3(percentHP,1,1);
+        
 
     }
     

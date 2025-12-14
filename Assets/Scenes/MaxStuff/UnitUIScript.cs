@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
@@ -23,7 +25,22 @@ public class UnitUIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("p"))
+        {
+            List<GameObject> AllUnitsList = GameObject.FindGameObjectsWithTag("Unit").ToList();
+            foreach( GameObject Unit in AllUnitsList)
+            {
+                Unit.GetComponent<Unit>().Damage(1);
+            } 
+        }
+        if (Input.GetKeyDown("o"))
+        {
+            List<GameObject> AllUnitsList = GameObject.FindGameObjectsWithTag("Unit").ToList();
+            foreach( GameObject Unit in AllUnitsList)
+            {
+                Unit.GetComponent<Unit>().Heal(1);
+            } 
+        }
     }
 
     public void MenuToggle()
