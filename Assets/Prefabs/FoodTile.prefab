@@ -52578,7 +52578,7 @@ MonoBehaviour:
   - {fileID: 8049136339437947015}
   - {fileID: 1099968173489374302}
   resourceType: 0
-  baseResourceHarvestTime: 5
+  baseResourceHarvestTime: 4
   resourcePerCollect: 1
 --- !u!1 &4962107518934022221
 GameObject:
