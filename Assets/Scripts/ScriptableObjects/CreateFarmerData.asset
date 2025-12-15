@@ -16,11 +16,11 @@ MonoBehaviour:
   description: 
   icon: {fileID: 0}
   faction: 0
-  maxHealth: 50
+  maxHealth: 10
   maxEnergy: 50
   moveSpeed: 6
   sightRange: 10
   attackRange: 1.5
-  attackDamage: 2
-  attacksPerSecond: 1
+  attackDamage: 10
+  attacksPerSecond: 0.333
   harvestingSpeed: 3

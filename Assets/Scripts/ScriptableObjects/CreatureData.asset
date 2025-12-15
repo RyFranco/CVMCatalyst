@@ -18,9 +18,9 @@ MonoBehaviour:
   faction: 0
   maxHealth: 10
   maxEnergy: 50
-  moveSpeed: 5
+  moveSpeed: 4
   sightRange: 10
   attackRange: 1.5
   attackDamage: 2
-  attacksPerSecond: 2
+  attacksPerSecond: 0.5
   harvestingSpeed: 1

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class EnemyZoneScript : MonoBehaviour
 {
-
-    public List<Unit> Intruders;
-
+    public GameObject Owner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +23,7 @@ public class EnemyZoneScript : MonoBehaviour
         {
             if(other.gameObject.GetComponent<Unit>().playerID == 0){
                 Debug.Log(other.gameObject.name + " YOU'RE TOO CLOSE");
-                Intruders.Add(other.gameObject.GetComponent<Unit>());
+                Owner.GetComponent<UnitEnemyScript>().Intruders.Add(other.gameObject.GetComponent<Unit>());
             }
         }    
     }
@@ -36,7 +34,7 @@ public class EnemyZoneScript : MonoBehaviour
         {
             if(other.gameObject.GetComponent<Unit>().playerID == 0){
                 Debug.Log(other.gameObject.name + " YOU'RE SAFE FOR NOW");
-                Intruders.Remove(other.gameObject.GetComponent<Unit>());
+                Owner.GetComponent<UnitEnemyScript>().Intruders.Remove(other.gameObject.GetComponent<Unit>());
             }
         }   
     }

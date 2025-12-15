@@ -20,7 +20,7 @@ MonoBehaviour:
   maxEnergy: 50
   moveSpeed: 4
   sightRange: 10
-  attackRange: 1.5
+  attackRange: 2
   attackDamage: 1
   attacksPerSecond: 1
   harvestingSpeed: 1

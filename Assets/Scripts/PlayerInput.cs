@@ -30,14 +30,11 @@ public class PlayerInput : MonoBehaviour
 
 
 
-
     }
 
 
     private void HandleBuildingSelection()
     {
-
-
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -170,6 +167,7 @@ public class PlayerInput : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayer)
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
+                if(unit.playerID != 0 ) return;
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
                     if (SelectionManager.Instance.IsSelected(unit))

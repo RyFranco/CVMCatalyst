@@ -22,60 +22,73 @@ public enum UnitState
 
 public class Unit : MonoBehaviour
 {
-    private protected NavMeshAgent agent;
+    protected NavMeshAgent agent;
     [SerializeField]
     private GameObject selectionSprite;
     public UnitData unitData;
-    private protected int currentHealth;
+    [SerializeField] private protected int currentHealth;
 
     bool isSelected = false;
-    [SerializeField] public UnitState currentState { get; private set; } = UnitState.Idle;
+    public UnitState currentState = UnitState.Idle;
     private ResourceTile currentTile;
     private Coroutine harvestingRoutine;
 
-    private protected  Coroutine attackRoutine;
-    private protected  Unit attackTarget;
+    [SerializeField] protected Coroutine attackRoutine;
+    [SerializeField] protected Unit attackTarget;
 
     private ResourceTile lastHarvestTile;
 
     [Header("Inventory")]
     public int MaxInventory = 3;
     private int currentInventory = 0;
-
     public Dictionary<ResourceType, int> carriedResources = new Dictionary<ResourceType, int>();
-
     public int playerID;
 
     [Header("Harvest Progress UI")]
-    public Canvas harvestBarCanvas;
-    public Slider harvestBar;
-
-    public UnitPanelScript UnitPanelScript;
-    public Animator animator;
+    [HideInInspector] public Canvas harvestBarCanvas;
+    [HideInInspector] public Slider harvestBar;
+    [HideInInspector] public UnitPanelScript UnitPanelScript;
+    [HideInInspector] public Animator animator;
 
     public virtual void Awake()
     {
         SelectionManager.Instance.AvailableUnits.Add(this);
         agent = GetComponent<NavMeshAgent>();
         currentHealth = unitData.maxHealth;
+        agent.speed = unitData.moveSpeed;
+        Debug.Log(selectionSprite);
     }
 
-    void Update()
+    public virtual void Update()
     {
-        if(agent.velocity.x > 1)
+        if(agent.velocity.x > .5f)
         {
             Quaternion newRotation = transform.rotation;
             newRotation.y = 0;
             transform.rotation = newRotation;
         }
-        else if (agent.velocity.x < 1)
+        else if (agent.velocity.x < -.5f)
         {
             Quaternion newRotation = transform.rotation;
             newRotation.y = 180;
             transform.rotation = newRotation;
         }
+        else
+        {
+            if (attackTarget)
+            {
+                float Direction = attackTarget.transform.position.x - gameObject.transform.position.x;
+                if(Direction < 0) Direction = -1; else Direction = 1;
 
-        animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
+                Quaternion newRotation = transform.rotation;
+                newRotation.y = 180 * Direction;
+                transform.rotation = newRotation;
+            }
+        }
+
+        
+
+        if(animator) animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
         if(UnitPanelScript) UnitPanelScript.UpdateBackground(currentState);
 
         switch (currentState)
@@ -111,14 +124,14 @@ public class Unit : MonoBehaviour
         
     }
 
-    public void Select()
+    public virtual void Select()
     {
         isSelected = true;
         selectionSprite.SetActive(true);
 
     }
 
-    public void Deselect()
+    public virtual void Deselect()
     {
         isSelected = false;
         selectionSprite.SetActive(false);
@@ -344,9 +357,8 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private protected IEnumerator AttackRoutine_Unit(Unit target)
+    protected IEnumerator AttackRoutine_Unit(Unit target)
     {
-
         while (target != null && target.currentState != UnitState.Dead && currentState == UnitState.Attacking)
         {
             float dist = Vector3.Distance(transform.position, target.transform.position);
@@ -355,7 +367,7 @@ public class Unit : MonoBehaviour
             {
                 agent.isStopped = true;
                 target.Damage(unitData.attackDamage);
-                yield return new WaitForSeconds(unitData.attacksPerSecond);
+                yield return new WaitForSeconds(1/unitData.attacksPerSecond);
             }
             else
             {
@@ -387,7 +399,7 @@ public class Unit : MonoBehaviour
                 Debug.Log($"Closed in!");
                 agent.isStopped = true;
                 target.TakeDamage(unitData.attackDamage);
-                yield return new WaitForSeconds(unitData.attacksPerSecond);
+                yield return new WaitForSeconds(1/unitData.attacksPerSecond);
             }
             else
             {
@@ -438,6 +450,10 @@ public class Unit : MonoBehaviour
         }
 
         currentState = UnitState.Dead;
+
+        //foreach()
+
+        //List <GameObject> EnemyList = GameObject.FindGameObjectsWithTag("Unit");
 
         Destroy(gameObject);
         Destroy(UnitPanelScript.gameObject);
