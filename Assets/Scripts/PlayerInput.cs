@@ -168,6 +168,7 @@ public class PlayerInput : MonoBehaviour
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
                 if(unit.playerID != 0 ) return;
+                if(unit.playerID != 0 ) return;
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
                     if (SelectionManager.Instance.IsSelected(unit))
