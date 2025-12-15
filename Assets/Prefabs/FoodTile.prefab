@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2323144819095227261}
   - component: {fileID: 1270307670273821159}
   - component: {fileID: 5289992382659317880}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8668,7 +8668,7 @@ GameObject:
   - component: {fileID: 4506946471149600285}
   - component: {fileID: 2999812386099627584}
   - component: {fileID: 5997703425650319761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17317,7 +17317,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631378567831814247}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot3
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -17353,7 +17353,7 @@ GameObject:
   - component: {fileID: 6656115917414168149}
   - component: {fileID: 4941356457609103405}
   - component: {fileID: 3033167209606990664}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26007,7 +26007,7 @@ GameObject:
   - component: {fileID: 1316963752493611048}
   - component: {fileID: 2056725477470080874}
   - component: {fileID: 1848509929299554776}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34661,7 +34661,7 @@ GameObject:
   - component: {fileID: 3540027271659453407}
   - component: {fileID: 5738386152873626948}
   - component: {fileID: 3943404900427396822}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43311,7 +43311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721468092805562941}
   - component: {fileID: 4014498228428948976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SelectHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43402,7 +43402,7 @@ GameObject:
   - component: {fileID: 1894557022367229201}
   - component: {fileID: 8644300274496478583}
   - component: {fileID: 1523907180633058585}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52058,7 +52058,7 @@ GameObject:
   - component: {fileID: 1806590731579065912}
   - component: {fileID: 3403407783121624506}
   - component: {fileID: 6662900479214646501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FoodTile
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -52590,7 +52590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870175757053780871}
   - component: {fileID: 7012296646622002130}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GridBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52676,7 +52676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756924209366525735}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -52712,7 +52712,7 @@ GameObject:
   - component: {fileID: 4620941043392733958}
   - component: {fileID: 2205535381027343703}
   - component: {fileID: 1899433057632259667}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61361,7 +61361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9052433300652851691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot2
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}

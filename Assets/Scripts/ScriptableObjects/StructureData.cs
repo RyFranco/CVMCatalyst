@@ -4,7 +4,7 @@ using UnityEngine;
 public enum BuildingType
 {
     TownHall,
-    UnityTraining,
+    UnitTraining,
     Farm
 }
 [CreateAssetMenu(fileName = "StructureData", menuName = "Scriptable Objects/StructureData")]

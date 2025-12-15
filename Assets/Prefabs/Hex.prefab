@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721468092805562941}
   - component: {fileID: 4014498228428948976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SelectHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1361670645730117377}
   - component: {fileID: 1806590731579065912}
   - component: {fileID: 3403407783121624506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hex
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -604,7 +604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870175757053780871}
   - component: {fileID: 7012296646622002130}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GridBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

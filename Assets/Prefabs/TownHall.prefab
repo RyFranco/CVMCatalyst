@@ -771,7 +771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4675264941262976885
 RectTransform:
   m_ObjectHideFlags: 0
@@ -868,6 +868,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddbf8c8d54d4264eb56c3d167010399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDistance: 5
+  scaleMultiplier: 1
+  minDistance: 10
+  maxDistance: 50
+  minScale: 0.01
+  maxScale: 0.04
 --- !u!1 &7312307515820104398
 GameObject:
   m_ObjectHideFlags: 0

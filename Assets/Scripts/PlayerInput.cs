@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -19,20 +20,84 @@ public class PlayerInput : MonoBehaviour
     float mouseDownTime;
     float dragDelay = 0.1f;
 
+    public Building selectedBuilding;
+
     private void Update()
     {
         HandleSelectionInputs();
         HandleMovementInputs();
+        HandleBuildingSelection();
+
+
+
+
+    }
+
+
+    private void HandleBuildingSelection()
+    {
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+
+
+                if (hit.transform.CompareTag("Building"))
+                {
+                    Debug.Log("Building Clicked");
+                    if (selectedBuilding)
+                    {
+                        selectedBuilding.Deselect();
+                        selectedBuilding = null;
+                    }
+
+                    selectedBuilding = hit.transform.GetComponent<Building>();
+                    selectedBuilding.Select();
+
+                }
+                else
+                {
+                    if (selectedBuilding != null)
+                    {
+                        selectedBuilding.Deselect();
+                        selectedBuilding = null;
+                    }
+                }
+
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+                if (hit.transform.GetComponentInParent<Building>().buildingData.buildingType == BuildingType.UnitTraining)
+                {
+                    foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
+                    {
+                       hit.transform.GetComponentInParent<SpecializeUnit>().StartTraining(unit);
+                    }
+                   
+                }
+            }
+        }
     }
 
     private void HandleMovementInputs()
     {
-        if(Input.GetMouseButtonDown(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
+        if (Input.GetMouseButtonDown(1) && SelectionManager.Instance.SelectedUnits.Count > 0)
         {
-            if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayer))
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, floorLayer))
             {
-                
-                 //Was resource tiles clicked?
+
+                //Was resource tiles clicked?
                 ResourceTile resourceTile = hit.collider.GetComponent<ResourceTile>();
                 if (resourceTile)
                 {
@@ -44,7 +109,7 @@ public class PlayerInput : MonoBehaviour
                     return;
                 }
 
-                 // //Was enemy unit clicked?
+                // //Was enemy unit clicked?
                 Unit targetUnit = hit.collider.GetComponent<Unit>();
                 if (targetUnit != null)
                 {
@@ -64,7 +129,7 @@ public class PlayerInput : MonoBehaviour
                 Building targetBuilding = hit.collider.GetComponent<Building>();
                 if (targetBuilding != null)
                 {
-                    if(targetBuilding.playerID != 0)
+                    if (targetBuilding.playerID != 0)
                     {
                         foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
                             unit.Attack(null, targetBuilding);
@@ -73,7 +138,7 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
 
-                foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
+                foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
                 {
                     unit.StopAllActions();
                     unit.MoveTo(hit.point);

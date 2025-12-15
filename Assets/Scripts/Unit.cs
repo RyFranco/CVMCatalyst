@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -197,6 +198,7 @@ public class Unit : MonoBehaviour
         {
 
             float harvestTime = tile.baseResourceHarvestTime / unitData.harvestingSpeed;
+            Debug.Log(harvestTime);
             float timer = 0f;
 
 
@@ -442,4 +444,5 @@ public class Unit : MonoBehaviour
         Destroy(UnitPanelScript.gameObject);
         Debug.Log($"{name} has died!");
     }
+
 }

@@ -117,6 +117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddbf8c8d54d4264eb56c3d167010399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDistance: 5
+  scaleMultiplier: 1
+  minDistance: 10
+  maxDistance: 50
+  minScale: 0.01
+  maxScale: 0.04
 --- !u!1 &2905836590867469723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,6 +1116,7 @@ MonoBehaviour:
   unitPrefabs:
   - {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
   playerID: 0
+  UIUnitPanel: {fileID: 0}
 --- !u!1 &4962107518934022221
 GameObject:
   m_ObjectHideFlags: 0

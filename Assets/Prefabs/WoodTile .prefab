@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2577350901634568233}
   - component: {fileID: 6044378441550744474}
   - component: {fileID: 1143148001158752646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2377195091873827761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot5
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -643,7 +643,7 @@ GameObject:
   - component: {fileID: 46001698964154656}
   - component: {fileID: 2908083787696123708}
   - component: {fileID: 1007111561994230167}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1241,7 +1241,7 @@ GameObject:
   - component: {fileID: 1730677388400419193}
   - component: {fileID: 4269146762281086969}
   - component: {fileID: 4590009843290353796}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1834,7 +1834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631378567831814247}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot3
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -1865,7 +1865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838023165827926723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot4
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -1901,7 +1901,7 @@ GameObject:
   - component: {fileID: 4310530152533130705}
   - component: {fileID: 3423811074342724842}
   - component: {fileID: 2009993037806190300}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2499,7 +2499,7 @@ GameObject:
   - component: {fileID: 4092908678253793754}
   - component: {fileID: 1907634476145145643}
   - component: {fileID: 3462765573206000043}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3097,7 +3097,7 @@ GameObject:
   - component: {fileID: 2150179871249521825}
   - component: {fileID: 4026071466810889699}
   - component: {fileID: 3002823165417560706}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3695,7 +3695,7 @@ GameObject:
   - component: {fileID: 1526055697570823620}
   - component: {fileID: 4915218286924734781}
   - component: {fileID: 679530795565687836}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5017,7 +5017,7 @@ GameObject:
   - component: {fileID: 249631110674455643}
   - component: {fileID: 9035602846434081530}
   - component: {fileID: 4324601668540928081}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5611,7 +5611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721468092805562941}
   - component: {fileID: 4014498228428948976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SelectHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5702,7 +5702,7 @@ GameObject:
   - component: {fileID: 5862478121479524787}
   - component: {fileID: 2007253828625236455}
   - component: {fileID: 7579844463805137981}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6300,7 +6300,7 @@ GameObject:
   - component: {fileID: 3271673381407240379}
   - component: {fileID: 5111401017398341473}
   - component: {fileID: 5612987207968084943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7622,7 +7622,7 @@ GameObject:
   - component: {fileID: 1558546238390950949}
   - component: {fileID: 2948966246326752247}
   - component: {fileID: 2547965266348138962}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8220,7 +8220,7 @@ GameObject:
   - component: {fileID: 7210235664978127157}
   - component: {fileID: 2066930925833479452}
   - component: {fileID: 4809633278519783576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8818,7 +8818,7 @@ GameObject:
   - component: {fileID: 4581298158359485349}
   - component: {fileID: 4670466108679275331}
   - component: {fileID: 2309425170908538978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9416,7 +9416,7 @@ GameObject:
   - component: {fileID: 6839015964691843219}
   - component: {fileID: 2506289633083217040}
   - component: {fileID: 7084845577792051981}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10740,7 +10740,7 @@ GameObject:
   - component: {fileID: 1806590731579065912}
   - component: {fileID: 3403407783121624506}
   - component: {fileID: 6662900479214646501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 'WoodTile '
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -11275,7 +11275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870175757053780871}
   - component: {fileID: 7012296646622002130}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GridBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11366,7 +11366,7 @@ GameObject:
   - component: {fileID: 258128751351742104}
   - component: {fileID: 8739181363290324849}
   - component: {fileID: 8748544954298016899}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12688,7 +12688,7 @@ GameObject:
   - component: {fileID: 5845501740246371404}
   - component: {fileID: 8198253823608529458}
   - component: {fileID: 4341203680153064472}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14010,7 +14010,7 @@ GameObject:
   - component: {fileID: 5156983440374845734}
   - component: {fileID: 6510369255265056396}
   - component: {fileID: 7901224863969583829}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14608,7 +14608,7 @@ GameObject:
   - component: {fileID: 7579523241088370397}
   - component: {fileID: 5535617371201555660}
   - component: {fileID: 1786595448779156466}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15201,7 +15201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756924209366525735}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -15237,7 +15237,7 @@ GameObject:
   - component: {fileID: 680429943763313044}
   - component: {fileID: 8717559272448220784}
   - component: {fileID: 9023503898980508494}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16554,7 +16554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9052433300652851691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CollectionSpot2
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -16590,7 +16590,7 @@ GameObject:
   - component: {fileID: 6707754255688657203}
   - component: {fileID: 3846050361203655845}
   - component: {fileID: 8639976331232974092}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17188,7 +17188,7 @@ GameObject:
   - component: {fileID: 8149778723357671345}
   - component: {fileID: 3043585941503891354}
   - component: {fileID: 8733797446920847009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17786,7 +17786,7 @@ GameObject:
   - component: {fileID: 782051628986324209}
   - component: {fileID: 5813376453829349867}
   - component: {fileID: 6170849989836217414}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18384,7 +18384,7 @@ GameObject:
   - component: {fileID: 5352032554188360864}
   - component: {fileID: 8955971687022705683}
   - component: {fileID: 1451883664744030952}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18982,7 +18982,7 @@ GameObject:
   - component: {fileID: 1092686649028646017}
   - component: {fileID: 7283320898536055086}
   - component: {fileID: 6997223745677668178}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
