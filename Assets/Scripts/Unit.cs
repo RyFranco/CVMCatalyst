@@ -21,19 +21,19 @@ public enum UnitState
 
 public class Unit : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    private protected NavMeshAgent agent;
     [SerializeField]
     private GameObject selectionSprite;
     public UnitData unitData;
-    int currentHealth;
+    private protected int currentHealth;
 
     bool isSelected = false;
-    public UnitState currentState { get; private set; } = UnitState.Idle;
+    [SerializeField] public UnitState currentState { get; private set; } = UnitState.Idle;
     private ResourceTile currentTile;
     private Coroutine harvestingRoutine;
 
-    private Coroutine attackRoutine;
-    private Unit attackTarget;
+    private protected  Coroutine attackRoutine;
+    private protected  Unit attackTarget;
 
     private ResourceTile lastHarvestTile;
 
@@ -52,7 +52,7 @@ public class Unit : MonoBehaviour
     public UnitPanelScript UnitPanelScript;
     public Animator animator;
 
-    public void Awake()
+    public virtual void Awake()
     {
         SelectionManager.Instance.AvailableUnits.Add(this);
         agent = GetComponent<NavMeshAgent>();
@@ -76,7 +76,32 @@ public class Unit : MonoBehaviour
         }
 
         animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
+        UnitPanelScript.UpdateBackground(currentState);
 
+        switch (currentState)
+        {
+            case UnitState.Idle:
+                    animator.SetBool("IsHarvesting", false);
+                    animator.SetBool("IsAttacking",false);
+                    
+                break;
+            case UnitState.Gathering:
+                    animator.SetBool("IsHarvesting", true);
+                    animator.SetBool("IsAttacking",false);
+                break;
+            case UnitState.Attacking:
+                    animator.SetBool("IsHarvesting", false);
+                    animator.SetBool("IsAttacking", true);
+                break;
+            case UnitState.MovingToAction:
+                    animator.SetBool("IsHarvesting", false);
+                    animator.SetBool("IsAttacking", false);
+                break;
+            default:
+                Debug.Log("INVALID UNIT STATE");
+                break;
+
+        }
 
     }
 
@@ -156,7 +181,6 @@ public class Unit : MonoBehaviour
 
 
         currentState = UnitState.Gathering;
-        animator.SetBool("IsHarvesting",true);
         harvestingRoutine = StartCoroutine(HarvestRoutine(tile));
 
 
@@ -227,10 +251,9 @@ public class Unit : MonoBehaviour
         return nearestTownHall;
     }
 
-    private IEnumerator DepositRoutine(GameObject townHall)
+    private protected IEnumerator DepositRoutine(GameObject townHall)
     {
         currentState = UnitState.MovingToAction;
-        animator.SetBool("IsHarvesting",false);
 
         //move to townhall
         agent.isStopped = false;
@@ -259,7 +282,7 @@ public class Unit : MonoBehaviour
 
     }
 
-    private void DepositResources(GameObject townHall)
+    private protected void DepositResources(GameObject townHall)
     {
         foreach (var kvp in carriedResources)
         {
@@ -299,7 +322,7 @@ public class Unit : MonoBehaviour
         agent.isStopped = false;
     }
 
-    public void Attack(Unit targetUnit = null, Building targetBuilding = null)
+    public virtual void Attack(Unit targetUnit = null, Building targetBuilding = null)
     {
         Debug.Log($"{name} is planning to attack.");
         StopAllActions();
@@ -320,7 +343,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackRoutine_Unit(Unit target)
+    private protected IEnumerator AttackRoutine_Unit(Unit target)
     {
 
         while (target != null && target.currentState != UnitState.Dead && currentState == UnitState.Attacking)
@@ -346,7 +369,7 @@ public class Unit : MonoBehaviour
         agent.isStopped = false;
     }
 
-    private IEnumerator AttackRoutine_Building(Building target)
+    private protected IEnumerator AttackRoutine_Building(Building target)
     {
         Debug.Log($"{name} attacking building.");
 
@@ -378,7 +401,7 @@ public class Unit : MonoBehaviour
         agent.isStopped = false;
     }
 
-    public void Heal(int amount)
+    public virtual void Heal(int amount)
     {
         if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator( ( (float)currentHealth) / ( (float)unitData.maxHealth) );
         if ((amount + currentHealth) >= unitData.maxHealth)
@@ -392,7 +415,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Damage(int amount)
+    public virtual void Damage(int amount)
     {
 
         currentHealth -= amount;
@@ -405,7 +428,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Die()
+    void Die()
     {
         if (SelectionManager.Instance != null)
         {

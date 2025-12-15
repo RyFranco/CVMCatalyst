@@ -43,7 +43,7 @@ public class UnitMaker : MonoBehaviour
                     UnitPanelScript newUnitPanelScript = newUIPanel.GetComponent<UnitPanelScript>();
 
                     unit.UnitPanelScript = newUnitPanelScript; //Assigns the new unit to the new panel
-                    newUnitPanelScript.Unit = unitObj; //Assigns the new panel to the new unit
+                    newUnitPanelScript.MatchingUnit = unitObj; //Assigns the new panel to the new unit
 
                     newUnitPanelScript.UnitImage.GetComponent<Image>().sprite = unit.unitData.icon;
 

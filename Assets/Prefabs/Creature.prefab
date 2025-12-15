@@ -450,7 +450,7 @@ MonoBehaviour:
   selectionSprite: {fileID: 7640302703263808049}
   unitData: {fileID: 11400000, guid: 9941d3f7aa8c82242af9800f4890443c, type: 2}
   MaxInventory: 3
-  playerID: 0
+  playerID: 1
   harvestBarCanvas: {fileID: 2044650655924544813}
   harvestBar: {fileID: 1915673182810429942}
   UnitPanelScript: {fileID: 0}
@@ -464,7 +464,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7192625611929617496}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -784,6 +784,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddbf8c8d54d4264eb56c3d167010399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDistance: 5
+  scaleMultiplier: 1
+  minDistance: 10
+  maxDistance: 50
+  minScale: 0.01
+  maxScale: 0.04
 --- !u!95 &406256639388580990
 Animator:
   serializedVersion: 7

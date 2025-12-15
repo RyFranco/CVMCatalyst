@@ -38,7 +38,7 @@ public class UnitSelectionManager : MonoBehaviour
 
                 if (hit.transform.CompareTag("Building"))
                 {
-                    Debug.Log("Building Clicked");
+                    //Debug.Log("Building Clicked");
                     if (selectedBuilding)
                     {
                         selectedBuilding.Deselect();
@@ -51,7 +51,7 @@ public class UnitSelectionManager : MonoBehaviour
                 }
                 else
                 {
-                    selectedBuilding.Deselect();
+                    if(selectedBuilding) selectedBuilding.Deselect();
                     selectedBuilding = null;
                 }
 
