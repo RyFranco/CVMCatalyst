@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &30642232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30642233}
+  m_Layer: 0
+  m_Name: MinionEnemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &30642233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30642232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 38.242012, y: -60.043415, z: 16.71939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54006714
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,7 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d175c29e445b23e4890ec4015bc9dcb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food: 1000
+  food: 20
   wood: 0
   stone: 0
   metal: 0
@@ -3375,7 +3406,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: '20
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3590,67 +3623,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500536691}
   m_CullTransparentMesh: 1
---- !u!1001 &1512592059
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_Name
-      value: Creature
-      objectReference: {fileID: 0}
-    - target: {fileID: 7192625611929617496, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 33.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.994
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8227519027250632984, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c01f35bc9b11c2246927181c1f63e995, type: 3}
 --- !u!1001 &1658905878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4271,8 +4243,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914549505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.1958}
-  m_LocalScale: {x: 19.338732, y: 0.68892753, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 20, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 737137792}
@@ -4282,10 +4254,10 @@ RectTransform:
   - {fileID: 458817823}
   m_Father: {fileID: 895234087}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1066, y: 400}
-  m_SizeDelta: {x: 77.6943, y: 100}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -35}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1914549507
 MonoBehaviour:
@@ -4897,6 +4869,10 @@ MonoBehaviour:
   - tilePrefab: {fileID: 4866350320822589613, guid: 249c224252641614c9f89d59fa376462, type: 3}
     spawnChance: 0.1
   defaultTilePrefab: {fileID: 4866350320822589613, guid: c1d37dd938fb17248b83433aa7c3fccd, type: 3}
+  minion: {fileID: 7192625611929617496, guid: 0e347ec691f68e746aaef800a52106fe, type: 3}
+  lesserMinion: {fileID: 7192625611929617496, guid: 592a3eac9b298124eb11ff23974a8a04, type: 3}
+  minionSpawnChance: 1
+  positions: []
 --- !u!1 &2120092739
 GameObject:
   m_ObjectHideFlags: 0
@@ -5132,4 +5108,4 @@ SceneRoots:
   - {fileID: 1658905878}
   - {fileID: 700407948}
   - {fileID: 745256679}
-  - {fileID: 1512592059}
+  - {fileID: 30642233}

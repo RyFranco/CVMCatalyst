@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da99a5e8f9d632e4dbb72b77c7242927, type: 3}
-  m_Name: MinionData
+  m_Name: LesserMinionData
   m_EditorClassIdentifier: 
-  unitName: Minion
+  unitName: Lesser Minion
   description: 
   icon: {fileID: 0}
   faction: 1
-  maxHealth: 15
+  maxHealth: 150
   maxEnergy: 50
-  moveSpeed: 2
-  sightRange: 10
-  attackRange: 2
-  attackDamage: 1
-  attacksPerSecond: 1
+  moveSpeed: 1.5
+  sightRange: 5
+  attackRange: 4
+  attackDamage: 5
+  attacksPerSecond: 4
   harvestingSpeed: 1

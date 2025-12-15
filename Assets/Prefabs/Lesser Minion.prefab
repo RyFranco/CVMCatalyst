@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 506696503065558067}
   - component: {fileID: 4351938146856782674}
   m_Layer: 6
-  m_Name: New Minion
+  m_Name: Lesser Minion
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6529861100863177559}
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionSprite: {fileID: 0}
-  unitData: {fileID: 11400000, guid: 6e36673d358460c449edd9c9a421f60a, type: 2}
+  unitData: {fileID: 11400000, guid: 68bdf5023b7fd144282fd3b44fdd8019, type: 2}
   currentHealth: 0
   currentState: 0
   attackTarget: {fileID: 0}

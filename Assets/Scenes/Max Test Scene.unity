@@ -5244,6 +5244,9 @@ MonoBehaviour:
   - tilePrefab: {fileID: 4866350320822589613, guid: b3d976b25b0e51a47b46b70ef712801c, type: 3}
     spawnChance: 0.3
   defaultTilePrefab: {fileID: 4866350320822589613, guid: c1d37dd938fb17248b83433aa7c3fccd, type: 3}
+  minion: {fileID: 7192625611929617496, guid: 0e347ec691f68e746aaef800a52106fe, type: 3}
+  lesserMinion: {fileID: 7192625611929617496, guid: 592a3eac9b298124eb11ff23974a8a04, type: 3}
+  minionSpawnChance: 1
 --- !u!1 &2120092739
 GameObject:
   m_ObjectHideFlags: 0

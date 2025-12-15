@@ -3,6 +3,9 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using Unity.Mathematics;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using System;
+using UnityEngine.Tilemaps;
 
 public class HexGridLayout : MonoBehaviour
 {
@@ -16,13 +19,28 @@ public class HexGridLayout : MonoBehaviour
     public List<TileSpawnChance> tileSpawnChances; 
     public GameObject defaultTilePrefab;
 
+    [Header("Enemy Spawns")]
+    public GameObject minion;
+    public GameObject lesserMinion;
+    public float minionSpawnChance;
+    float lowerMinionSpawnChance;
+
+    public List<Vector3> positions;
+    Vector3 LMPosition;
+
+    GameObject Minions;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        lowerMinionSpawnChance = 1;
         surface = FindFirstObjectByType<NavMeshSurface>();
         LayOutGrid();
         BakeNavMesh();
+        Minions = GameObject.Find("MinionEnemies");
+        SpawnMinions();
+        
     }
 
     // Update is called once per frame
@@ -37,10 +55,45 @@ public class HexGridLayout : MonoBehaviour
         {
             for (int x = 0; x < gridSize.x; x++)
             {
-                GameObject prefabToUse = GetRandomTilePrefab();
+                
+                GameObject prefabToUse = GetRandomTilePrefab() ;
                 GameObject tile = Instantiate(prefabToUse,  GetPositionForHexFromCoordinate(new Vector2Int(x, y)), Quaternion.identity, transform);
+
+                //if(x == gridSize.x - 1 && y == gridSize.y - 1) LMPosition = tile.transform.position + new Vector3(0,1f,0);
+
+                if(y > 5)
+                {
+                    if (UnityEngine.Random.Range(0f, 100f) <= minionSpawnChance)
+                    {
+                        if(prefabToUse == defaultTilePrefab) //prevents spawning on resourceTile
+                        {
+                            Debug.Log("Minion Spawn Success with " + minionSpawnChance + "%");
+                            minionSpawnChance = lowerMinionSpawnChance;
+                            positions.Add(tile.transform.localPosition + gameObject.transform.position);
+                        } 
+                    }
+                    else
+                    {
+                        minionSpawnChance += 5f;
+                    }
+                    
+                }
+                
             }
+            if(y > 5) lowerMinionSpawnChance += 5f;
         }
+    }
+
+    private void SpawnMinions()
+    {
+
+        foreach(Vector3 spawnPosition in positions)
+        {
+            GameObject newSpawn = Instantiate(minion, spawnPosition + new Vector3(0,1,0), transform.rotation);
+            newSpawn.transform.parent = Minions.transform;
+
+        }
+
     }
 
     private GameObject GetRandomTilePrefab()
