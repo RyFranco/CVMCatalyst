@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Builder Hut
   MaxHealth: 50
-  cost: 20
+  cost:
+  - resource: 0
+    amount: 3
+  - resource: 1
+    amount: 10
   buildingType: 1

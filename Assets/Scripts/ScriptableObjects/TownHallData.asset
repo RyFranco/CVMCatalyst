@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Town Hall
   MaxHealth: 100
-  cost: 25
+  cost: []
   buildingType: 0
