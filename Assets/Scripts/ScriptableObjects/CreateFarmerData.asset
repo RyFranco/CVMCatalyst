@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da99a5e8f9d632e4dbb72b77c7242927, type: 3}
   m_Name: CreateFarmerData
   m_EditorClassIdentifier: 
-  unitName: 
+  unitName: Creature Farmer
   description: 
   icon: {fileID: 0}
   faction: 0
-  maxHealth: 100
+  maxHealth: 50
   maxEnergy: 50
-  moveSpeed: 5
+  moveSpeed: 6
   sightRange: 10
   attackRange: 1.5
-  attackDamage: 10
+  attackDamage: 2
   attacksPerSecond: 1
-  harvestingSpeed: 1
+  harvestingSpeed: 3

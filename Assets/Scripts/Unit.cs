@@ -58,7 +58,6 @@ public class Unit : MonoBehaviour
         SelectionManager.Instance.AvailableUnits.Add(this);
         agent = GetComponent<NavMeshAgent>();
         currentHealth = unitData.maxHealth;
-        Debug.Log(selectionSprite);
     }
 
     void Update()

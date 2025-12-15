@@ -24,9 +24,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        HandleSelectionInputs();
         HandleMovementInputs();
         HandleBuildingSelection();
+        HandleSelectionInputs();
 
 
 
@@ -76,8 +76,10 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("Right Clicked Building");
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
+                if(hit.transform.gameObject.CompareTag("Tile")) return;
                 if (hit.transform.GetComponentInParent<Building>().buildingData.buildingType == BuildingType.UnitTraining)
                 {
                     foreach(Unit unit in SelectionManager.Instance.SelectedUnits)

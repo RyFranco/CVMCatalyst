@@ -7,11 +7,13 @@ public enum BuildingType
     UnitTraining,
     Farm
 }
+
+
 [CreateAssetMenu(fileName = "StructureData", menuName = "Scriptable Objects/StructureData")]
 public class StructureData : ScriptableObject
 {
     public string Name;
     public int MaxHealth;
-    public int cost;
+    public ResourceCost[] cost;
     [SerializeField] public BuildingType buildingType;
 }

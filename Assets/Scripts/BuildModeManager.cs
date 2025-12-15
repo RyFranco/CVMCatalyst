@@ -41,9 +41,13 @@ public class BuildModeManager : MonoBehaviour
         Debug.Log($"building id: {buildingList[buildingID]}");
         Debug.Log($"cost: {buildingList[buildingID].GetComponent<Building>().buildingData.cost}");
 
-        //if(ResourceManager.Instance.RemoveResource(ResourceType.Food, buildingList[buildingID].GetComponent<Building>().buildingData.cost))
-        if( buildingList[buildingID].GetComponent<Building>().buildingData.cost <= ResourceManager.Instance.food)
+
+       
+
+
+        if( ResourceManager.Instance.hasEnoughResources(buildingList[buildingID].GetComponent<Building>().buildingData.cost) )
         {
+
             selectedBuilding = Instantiate(buildingListTransparent[buildingID], lastHoveredHex.transform.position, quaternion.identity);
             currentBuildingID = buildingID;
         }
@@ -67,15 +71,11 @@ public class BuildModeManager : MonoBehaviour
                
                 if (Input.GetMouseButtonDown(0) && selectedBuilding)
                 {
-                    Debug.Log("BUILDING PLACED");
-                    Debug.Log(hit.transform.gameObject);
+
                     Destroy(hit.transform.gameObject); // destroy clicked tile
-
-
-
-                    Instantiate(buildingList[currentBuildingID], lastHoveredHex.transform.position, quaternion.identity);
+                    Instantiate(buildingList[currentBuildingID], lastHoveredHex.transform.position, quaternion.identity); //place building
+                    ResourceManager.Instance.RemoveResources(buildingList[currentBuildingID].GetComponent<Building>().buildingData.cost);
                     Destroy(selectedBuilding);
-
                     ToggleBuildMode();
 
                 }
