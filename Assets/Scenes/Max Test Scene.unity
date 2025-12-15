@@ -1322,6 +1322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedBuilding: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!114 &400209461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1339,6 +1340,7 @@ MonoBehaviour:
   buildingList:
   - {fileID: 4866350320822589613, guid: a1bd5147ad6720340bbf1e5226db1e9a, type: 3}
   - {fileID: 4866350320822589613, guid: d55802c622dc4c34399944f55079b980, type: 3}
+  buildingListTransparent: []
 --- !u!114 &400209462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1359,6 +1361,7 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 128
+  selectedBuilding: {fileID: 0}
 --- !u!1 &401957859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4464,7 +4467,7 @@ PrefabInstance:
       objectReference: {fileID: 1734329855}
     - target: {fileID: 8521537995590009789, guid: a1bd5147ad6720340bbf1e5226db1e9a, type: 3}
       propertyPath: m_VersionIndex
-      value: 567
+      value: 570
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

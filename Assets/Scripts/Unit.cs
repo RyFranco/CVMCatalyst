@@ -77,7 +77,7 @@ public class Unit : MonoBehaviour
         }
 
         animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
-        UnitPanelScript.UpdateBackground(currentState);
+        if(UnitPanelScript) UnitPanelScript.UpdateBackground(currentState);
 
         switch (currentState)
         {
