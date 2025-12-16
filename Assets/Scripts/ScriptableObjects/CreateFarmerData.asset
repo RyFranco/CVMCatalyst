@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Creature Farmer
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: -462160752, guid: d965cd1aed5127a49bdaa2d58d9eb698, type: 3}
   faction: 0
   maxHealth: 10
   maxEnergy: 50

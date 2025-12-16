@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 using UnityEngine;
 using UnityEngine.AI;
@@ -91,7 +93,7 @@ public class Unit : MonoBehaviour
         if(animator) animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
         if(UnitPanelScript) UnitPanelScript.UpdateBackground(currentState);
 
-        switch (currentState)
+        switch (currentState)//Sets Animation based on Unit State
         {
             case UnitState.Idle:
                     animator.SetBool("IsHarvesting", false);
@@ -133,6 +135,7 @@ public class Unit : MonoBehaviour
 
     public virtual void Deselect()
     {
+        Debug.Log(name + " Deselected");
         isSelected = false;
         selectionSprite.SetActive(false);
     }
@@ -416,7 +419,7 @@ public class Unit : MonoBehaviour
 
     public virtual void Heal(int amount)
     {
-        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator( ( (float)currentHealth) / ( (float)unitData.maxHealth) );
+        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth/(float)unitData.maxHealth);
         if ((amount + currentHealth) >= unitData.maxHealth)
         {
             currentHealth = unitData.maxHealth;
@@ -430,15 +433,52 @@ public class Unit : MonoBehaviour
 
     public virtual void Damage(int amount)
     {
+        if (!attackTarget && currentState == UnitState.Idle) LookForEnemy();
 
         currentHealth -= amount;
-        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator( ( (float)currentHealth) / ( (float)unitData.maxHealth) );
+        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth/(float)unitData.maxHealth);
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
         }
+    }
+
+    void LookForEnemy()
+    {
+        //Finds all units, then removes units on same team
+        List<GameObject> AllUnitsList = GameObject.FindGameObjectsWithTag("Unit").ToList();
+        List<GameObject> EnemyUnits = new List<GameObject>();
+
+        foreach (var UnitinList in AllUnitsList)
+        {
+            if(UnitinList.GetComponent<Unit>().playerID != playerID)
+            {
+                EnemyUnits.Add(UnitinList);
+            }
+        }
+
+        //finds the nearest enemy
+        GameObject nearestEnemy = null;
+        float NearestEnemyDistance = 9999;
+
+        foreach(GameObject Enemy in EnemyUnits)
+        {
+            float currentDistance = Vector3.Distance(transform.position, Enemy.transform.position);
+            if (currentDistance < NearestEnemyDistance && currentDistance <= unitData.sightRange)
+            {
+                NearestEnemyDistance = currentDistance;
+                nearestEnemy = Enemy;
+            }
+        }
+
+        if (nearestEnemy)
+        {
+            StopAllActions();
+            Attack(nearestEnemy.GetComponent<Unit>());
+        }
+        
     }
 
     void Die()
@@ -454,10 +494,15 @@ public class Unit : MonoBehaviour
         //foreach()
 
         //List <GameObject> EnemyList = GameObject.FindGameObjectsWithTag("Unit");
-
+        RemovePanel();
         Destroy(gameObject);
-        Destroy(UnitPanelScript.gameObject);
+        
         Debug.Log($"{name} has died!");
+    }
+
+    public void RemovePanel()
+    {
+        Destroy(UnitPanelScript.gameObject);
     }
 
 }

@@ -91,9 +91,7 @@ public class UnitEnemyScript : Unit
                 agent.isStopped = true;
                 if(AttackTimer <= 0)//If attack is ready
                 {
-
                     AttackTimer = 1;
-                    Debug.Log("TAKE THIS! ");
                     attackTarget.Damage(unitData.attackDamage);
                 }
             }
@@ -103,7 +101,6 @@ public class UnitEnemyScript : Unit
                 agent.isStopped = false;
                 agent.SetDestination(attackTarget.transform.position);
             }
-            Debug.Log(agent.isStopped);
         }
 
 
@@ -123,9 +120,8 @@ public class UnitEnemyScript : Unit
 
     }
 
-    public override void Damage(int amount)
+    public override void Damage(int amount) //Unit TAKES "amount" damage   
     {
-
         currentHealth -= amount;
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)

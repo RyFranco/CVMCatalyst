@@ -17,7 +17,7 @@ public class EnemyZoneScript : MonoBehaviour
     {
         
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other) //Adds Unit to Enemy's List
     {
         if(other.gameObject.tag == "Unit" && other.gameObject.GetComponent<Unit>()) //checks if collision is a valid unit SHOULD only get creatures
         {
@@ -28,7 +28,7 @@ public class EnemyZoneScript : MonoBehaviour
         }    
     }
 
-    void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)  //Removes Unit from Enemy's List
     {
         if(other.gameObject.tag == "Unit" && other.gameObject.GetComponent<Unit>()) //checks if collision is a valid unit SHOULD only get creatures
         {

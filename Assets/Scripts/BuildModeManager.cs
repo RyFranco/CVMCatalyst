@@ -19,10 +19,12 @@ public class BuildModeManager : MonoBehaviour
 
     public List<GameObject> buildingList = new List<GameObject>();
     public List<GameObject> buildingListTransparent = new List<GameObject>();
+
     void Awake()
     {
         instance = this;
     }
+
     public void ToggleBuildMode()
     {
         buildModeActive = !buildModeActive;
@@ -40,10 +42,6 @@ public class BuildModeManager : MonoBehaviour
     {
         Debug.Log($"building id: {buildingList[buildingID]}");
         Debug.Log($"cost: {buildingList[buildingID].GetComponent<Building>().buildingData.cost}");
-
-
-       
-
 
         if( ResourceManager.Instance.hasEnoughResources(buildingList[buildingID].GetComponent<Building>().buildingData.cost) )
         {

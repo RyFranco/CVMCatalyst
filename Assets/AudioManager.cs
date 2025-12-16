@@ -1,10 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance {get; private set;}
+
+    public int SongPlaying;
 
     private float fadeTime = 3f;
 
@@ -14,6 +18,9 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip[] tracks;
 
+    public float PlayerSelectedVolume;
+
+    public bool InCombat;
 
     void Awake()
     {
@@ -34,22 +41,42 @@ public class AudioManager : MonoBehaviour
 
         activeSource = sourceA;
         activeSource.clip = tracks[0];
-        activeSource.volume = 0.5f;
+        activeSource.volume = PlayerSelectedVolume;
         activeSource.Play();
         
 
     }
 
+    void CombatSongCheck()
+    {
+        List<GameObject> AllUnitsList = GameObject.FindGameObjectsWithTag("Unit").ToList();
+        foreach( GameObject Unit in AllUnitsList)
+        {
+            if(Unit.GetComponent<Unit>().currentState == UnitState.Attacking)
+            {
+                InCombat = true;
+                if(SongPlaying != 1) PlayWithFade(1);
+                return;
+            }
+        }
+        if(SongPlaying != 0) PlayWithFade(0);
+        InCombat = false; 
+    }
+
+
+
     public void Play(int i)
     {
+        SongPlaying = i;
         activeSource.clip = tracks[i];
-        activeSource.volume = 0.5f;
+        activeSource.volume = PlayerSelectedVolume;
         activeSource.Play();
         
     }
 
     public void PlayWithFade(int i)
     {
+        SongPlaying = i;
         AudioSource inactive = activeSource == sourceA ? sourceB : sourceA;
 
         inactive.clip = tracks[i ];
@@ -70,8 +97,8 @@ public class AudioManager : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = timer / fadeTime;
-            from.volume = Mathf.Lerp(0.5f, 0f, t);
-            to.volume = Mathf.Lerp(0f, 0.5f, t);
+            from.volume = Mathf.Lerp(PlayerSelectedVolume, 0f, t);
+            to.volume = Mathf.Lerp(0f, PlayerSelectedVolume, t);
             yield return null;
         }
 
@@ -80,6 +107,7 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)) PlayWithFade (1);
+        //if(Input.GetKeyDown(KeyCode.I)) PlayWithFade (1);
+        CombatSongCheck();
     }
 }

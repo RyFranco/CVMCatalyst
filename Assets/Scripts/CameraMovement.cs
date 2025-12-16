@@ -9,8 +9,8 @@ public class CameraMovement : MonoBehaviour
 
     [Header("Zoom Settings")]
     public float zoomSpeed;
-    public float minY;
-    public float maxY;
+    public float MinZoom = -18f;
+    public float MaxZoom = 18f;
 
     private float zoomRatio = 1.0f; //Help keep middle mouse movement synced
 
@@ -23,8 +23,7 @@ public class CameraMovement : MonoBehaviour
 
     public GameObject FollowTarget;
 
-    float MinZoom = -18f;
-    float MaxZoom = 18f;
+
     float ZoomNumber = 0f;
 
     Vector3 DefaultCameraFollowOffset = new Vector3(0,15,-25);
@@ -40,9 +39,9 @@ public class CameraMovement : MonoBehaviour
     {
         HandleCameraMovement();
         
-        //Zooms
+        //Zooms by moving camera further in/out of screen
         ZoomNumber += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-        ZoomNumber = math.clamp(ZoomNumber,MinZoom,MaxZoom);
+        ZoomNumber = math.clamp(ZoomNumber, MinZoom, MaxZoom);
         transform.localPosition = new Vector3(0,0,ZoomNumber);
 
         if(FollowTarget != null) //Makes camera follow unit if selected
@@ -50,51 +49,6 @@ public class CameraMovement : MonoBehaviour
             CameraHolder.transform.position = FollowTarget.transform.position + CameraFollowOffset + new Vector3(0,1f,0);
         }
 
-
-        //Old Camera System vvv
-        {
-        /*
-        CameraFollowOffset = DefaultCameraFollowOffset / ZoomNumber;
-
-        Vector3 newPos = pos;
-        newPos.y = CameraFollowOffset.y;
-        newPos.z = CameraFollowOffset.z;
-
-        transform.position = newPos;
-
-        
-        
-
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f)
-        {
-
-            // Move along local forward direction for smooth zoom
-            Vector3 direction = transform.forward * scroll * zoomSpeed * Time.deltaTime;
-            Vector3 newPos = pos + direction;
-
-            if (newPos.y < minY)
-            {
-                newPos.y = minY;
-                newPos.x = pos.x;
-                newPos.z = pos.z;
-            }
-            else if (newPos.y > maxY)
-            {
-                newPos.y = maxY;
-                newPos.x = pos.x;
-                newPos.z = pos.z;
-            }
-            
-            pos = newPos;
-        }
-        
-        zoomRatio = Mathf.InverseLerp(minY, maxY, pos.y); // 0 = minY (zoomed in), 1 = maxY (zoomed out)
-        zoomRatio = Mathf.Lerp(0.5f, 2f, zoomRatio); // scale drag speed to something usable
-
-        */
-    }
-        
     }
 
     void HandleCameraMovement()

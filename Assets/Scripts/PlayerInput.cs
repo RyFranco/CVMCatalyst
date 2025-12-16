@@ -20,6 +20,8 @@ public class PlayerInput : MonoBehaviour
     float mouseDownTime;
     float dragDelay = 0.1f;
 
+    public bool UIClick;
+
     public Building selectedBuilding;
 
     private void Update()
@@ -73,10 +75,13 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Right Clicked Building");
+
+            //Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
                 if(hit.transform.gameObject.CompareTag("Tile")) return;
+                if(hit.transform.gameObject.CompareTag("Unit")) return;
                 if (hit.transform.GetComponentInParent<Building>().buildingData.buildingType == BuildingType.UnitTraining)
                 {
                     foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
@@ -164,6 +169,10 @@ public class PlayerInput : MonoBehaviour
             selectionBox.sizeDelta = Vector2.zero;
             selectionBox.gameObject.SetActive(false);
 
+            if(UIClick){
+                UIClick = false;
+                return;
+            }
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayer)
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
@@ -219,7 +228,6 @@ public class PlayerInput : MonoBehaviour
             else
             {
                 SelectionManager.Instance.Deselect(SelectionManager.Instance.AvailableUnits[i]);
-
             }
         }
     }

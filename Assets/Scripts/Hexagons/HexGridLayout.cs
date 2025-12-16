@@ -13,11 +13,12 @@ public class HexGridLayout : MonoBehaviour
     public Vector2Int gridSize;
     public GameObject hex;
     private NavMeshSurface surface;
-
+    public int MinionBuildingInteral = 5;
 
     [Header("Tile Prefabs and Chances")]
     public List<TileSpawnChance> tileSpawnChances; 
     public GameObject defaultTilePrefab;
+    public GameObject minionBuilding;
 
     [Header("Enemy Spawns")]
     public GameObject minion;
@@ -25,20 +26,22 @@ public class HexGridLayout : MonoBehaviour
     public float minionSpawnChance;
     float lowerMinionSpawnChance;
 
-    public List<Vector3> positions;
-    Vector3 LMPosition;
 
-    GameObject Minions;
+    [SerializeField] private List<Vector3> positions;
+    [SerializeField] private List<Vector2> BuildingPositions;
+
+    GameObject Minions;//Empty Gameobject to hold spawned minions
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         lowerMinionSpawnChance = 1;
+        Minions = GameObject.Find("MinionEnemies");
         surface = FindFirstObjectByType<NavMeshSurface>();
+
         LayOutGrid();
         BakeNavMesh();
-        Minions = GameObject.Find("MinionEnemies");
         SpawnMinions();
         
     }
@@ -51,37 +54,60 @@ public class HexGridLayout : MonoBehaviour
 
     private void LayOutGrid()
     {
-        for (int y = 0; y < gridSize.y; y++)
+
+        FindBuildingSpawnpoints();
+
+        for (int y = 0; y < gridSize.y; y++)//building matrix for hextiles
         {
             for (int x = 0; x < gridSize.x; x++)
             {
-                
-                GameObject prefabToUse = GetRandomTilePrefab() ;
-                GameObject tile = Instantiate(prefabToUse,  GetPositionForHexFromCoordinate(new Vector2Int(x, y)), Quaternion.identity, transform);
 
-                //if(x == gridSize.x - 1 && y == gridSize.y - 1) LMPosition = tile.transform.position + new Vector3(0,1f,0);
-
-                if(y > 5)
+                if (BuildingPositions.Contains(new Vector2(x,y)))//checks if current positions is part of the building list
                 {
-                    if (UnityEngine.Random.Range(0f, 100f) <= minionSpawnChance)
+                    GameObject prefabToUse = minionBuilding; //creates minion building 
+                    Instantiate(prefabToUse, GetPositionForHexFromCoordinate(new Vector2Int(x, y)), Quaternion.identity, transform);
+                }   
+                else
+                {
+                    GameObject prefabToUse = GetRandomTilePrefab();//gets a random tile from weighted list
+                    GameObject tile = Instantiate(prefabToUse,  GetPositionForHexFromCoordinate(new Vector2Int(x, y)), Quaternion.identity, transform);
+                    if(y > 5)
                     {
-                        if(prefabToUse == defaultTilePrefab) //prevents spawning on resourceTile
+                        if (UnityEngine.Random.Range(0f, 100f) <= minionSpawnChance)
                         {
-                            Debug.Log("Minion Spawn Success with " + minionSpawnChance + "%");
-                            minionSpawnChance = lowerMinionSpawnChance;
-                            positions.Add(tile.transform.localPosition + gameObject.transform.position);
-                        } 
+                            if(prefabToUse == defaultTilePrefab) //prevents spawning on resourceTile
+                            {
+                                //Debug.Log("Minion Spawn Success with " + minionSpawnChance + "%");
+                                minionSpawnChance = lowerMinionSpawnChance;
+                                positions.Add(tile.transform.localPosition + gameObject.transform.position);
+                            } 
+                        }
+                        else
+                        {
+                            minionSpawnChance += 5f;
+                        }
+                        
                     }
-                    else
-                    {
-                        minionSpawnChance += 5f;
-                    }
-                    
                 }
+                
                 
             }
             if(y > 5) lowerMinionSpawnChance += 5f;
         }
+    }
+
+    private void FindBuildingSpawnpoints() //Fills list with positions for Minion Buildings
+    {
+        for (int i = gridSize.y; i > 0; i--)
+        {
+            Debug.Log(i);
+            if(i % MinionBuildingInteral == 0)
+            {
+                Debug.Log("BUILDING AT Y = "+ i);
+                BuildingPositions.Add(new Vector2( UnityEngine.Random.Range(0,gridSize.x -1), i - 1));
+            }
+        }
+
     }
 
     private void SpawnMinions()

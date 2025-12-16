@@ -52,12 +52,13 @@ public class SpecializeUnit : MonoBehaviour
             yield return null;
         }
 
-        Instantiate(TrainToThisUnit, trainingPositionNode.transform.position, Quaternion.identity);
+        //Instantiate(TrainToThisUnit, trainingPositionNode.transform.position, Quaternion.identity);
 
+        GameObject.Find("TownHall").GetComponent<UnitMaker>().makeUnit(TrainToThisUnit,trainingPositionNode.transform.position);
         SelectionManager.Instance.AvailableUnits.Remove(unit);
         SelectionManager.Instance.SelectedUnits.Remove(unit);
         Destroy(unit.gameObject);
-
+        unit.RemovePanel();
         isTraining = false;
     }
 
