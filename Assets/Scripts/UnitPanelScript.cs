@@ -1,5 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 //Script that goes on each of the panel objects 

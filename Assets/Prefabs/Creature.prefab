@@ -449,6 +449,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionSprite: {fileID: 7640302703263808049}
   unitData: {fileID: 11400000, guid: 9941d3f7aa8c82242af9800f4890443c, type: 2}
+  currentHealth: 0
+  currentState: 0
+  attackTarget: {fileID: 0}
   MaxInventory: 3
   playerID: 1
   harvestBarCanvas: {fileID: 2044650655924544813}
@@ -464,7 +467,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7192625611929617496}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.75
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
