@@ -4664,7 +4664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5522208fc3b52544ea30fe92f4129bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 5, y: 50}
+  gridSize: {x: 15, y: 15}
   hex: {fileID: 4866350320822589613, guid: c1d37dd938fb17248b83433aa7c3fccd, type: 3}
   MinionBuildingInterval: 5
   tileSpawnChances:
