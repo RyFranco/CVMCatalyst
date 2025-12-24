@@ -22,7 +22,6 @@ public class HexGridLayout : MonoBehaviour
 
     [Header("Enemy Spawns")]
     public GameObject minion;
-    public GameObject lesserMinion;
     public float minionSpawnChance;
     float lowerMinionSpawnChance;
 
@@ -31,7 +30,6 @@ public class HexGridLayout : MonoBehaviour
     [SerializeField] private List<Vector2> BuildingPositions;
 
     GameObject Minions;//Empty Gameobject to hold spawned minions
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -100,10 +98,8 @@ public class HexGridLayout : MonoBehaviour
     {
         for (int i = gridSize.y; i > 0; i--)
         {
-            Debug.Log(i);
             if(i % MinionBuildingInteral == 0)
             {
-                Debug.Log("BUILDING AT Y = "+ i);
                 BuildingPositions.Add(new Vector2( UnityEngine.Random.Range(0,gridSize.x -1), i - 1));
             }
         }

@@ -47,7 +47,6 @@ public class PlayerInput : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
 
-
                 if (hit.transform.CompareTag("Building"))
                 {
                     Debug.Log("Building Clicked");
@@ -80,15 +79,15 @@ public class PlayerInput : MonoBehaviour
 
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                if(hit.transform.gameObject.CompareTag("Tile")) return;
-                if(hit.transform.gameObject.CompareTag("Unit")) return;
+                if (hit.transform.gameObject.CompareTag("Tile")) return;
+                if (hit.transform.gameObject.CompareTag("Unit")) return;
                 if (hit.transform.GetComponentInParent<Building>().buildingData.buildingType == BuildingType.UnitTraining)
                 {
-                    foreach(Unit unit in SelectionManager.Instance.SelectedUnits)
+                    foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
                     {
-                       hit.transform.GetComponentInParent<SpecializeUnit>().StartTraining(unit);
+                        hit.transform.GetComponentInParent<SpecializeUnit>().StartTraining(unit);
                     }
-                   
+
                 }
             }
         }
@@ -108,7 +107,7 @@ public class PlayerInput : MonoBehaviour
                     foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
                     {
                         unit.StopAllActions();
-                        unit.StartCoroutine(unit.TryStartHarvesting(resourceTile));
+                        unit.StartHarvesting(resourceTile);
                     }
                     return;
                 }
@@ -119,9 +118,10 @@ public class PlayerInput : MonoBehaviour
                 {
                     if (targetUnit.playerID != 0)
                     {
+
                         foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
                         {
-                            unit.StopAllActions();
+                            if (unit.currentState == ActionState.Attacking && unit.currentAttackTarget == targetUnit) continue;
                             unit.Attack(targetUnit);
                         }
                         return;
@@ -136,7 +136,10 @@ public class PlayerInput : MonoBehaviour
                     if (targetBuilding.playerID != 0)
                     {
                         foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
-                            unit.Attack(null, targetBuilding);
+                        {
+                            if (unit.currentState == ActionState.Attacking && unit.currentBuildingTarget == targetUnit) continue;
+                        unit.Attack(null, targetBuilding); 
+                        }
                         return;
 
                     }
@@ -169,15 +172,15 @@ public class PlayerInput : MonoBehaviour
             selectionBox.sizeDelta = Vector2.zero;
             selectionBox.gameObject.SetActive(false);
 
-            if(UIClick){
+            if (UIClick)
+            {
                 UIClick = false;
                 return;
             }
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayer)
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
-                if(unit.playerID != 0 ) return;
-                if(unit.playerID != 0 ) return;
+                if (unit.playerID != 0) return;
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
                     if (SelectionManager.Instance.IsSelected(unit))

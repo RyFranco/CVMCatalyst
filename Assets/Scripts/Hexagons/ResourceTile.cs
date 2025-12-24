@@ -49,7 +49,6 @@ public class ResourceTile : MonoBehaviour
         int spotIndex = GetFreeSpotIndex();
         if (spotIndex == -1)
         {
-            Debug.LogError("No free spot found but HasSpace was true :/");
             return;
         }
 

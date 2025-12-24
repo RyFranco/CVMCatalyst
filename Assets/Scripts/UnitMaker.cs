@@ -8,11 +8,11 @@ public class UnitMaker : MonoBehaviour
     public List<GameObject> unitPrefabs = new List<GameObject>();
     public int playerID = 0;
 
-    [SerializeField] GameObject UIUnitPanel;
+    public GameObject UIUnitPanel;
+    public GameObject UnitUIObject;
+    public UnitUIScript UnitUIScript;
 
-
-    GameObject UnitUIObject;
-    UnitUIScript UnitUIScript;
+    public GameObject spawnNode;
 
     public void Awake()
     {
@@ -23,12 +23,9 @@ public class UnitMaker : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void makeUnit(int id)
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
             if (ResourceManager.Instance.RemoveResource(ResourceType.Food, 10))
             {
-                GameObject unitObj = Instantiate(unitPrefabs[id], hit.point, quaternion.identity);
+                GameObject unitObj = Instantiate(unitPrefabs[id], spawnNode.transform.position, quaternion.identity);
                 Unit unit = unitObj.GetComponent<Unit>();
                 if (unit != null)
                 {
@@ -38,7 +35,7 @@ public class UnitMaker : MonoBehaviour
 
                     //CREATES AND ASSIGNS UI PANELS FOR NEW UNIT
                     GameObject UIGridParent =  UnitUIScript.Grid; //Grid - to let the uipane
-                    GameObject newUIPanel = Instantiate(UIUnitPanel,UIGridParent.transform);
+                    GameObject newUIPanel = Instantiate(UIUnitPanel, UIGridParent.transform);
                     UnitPanelScript newUnitPanelScript = newUIPanel.GetComponent<UnitPanelScript>();
 
                     unit.UnitPanelScript = newUnitPanelScript; //Assigns the new unit to the new panel
@@ -55,8 +52,6 @@ public class UnitMaker : MonoBehaviour
             {
                 Debug.Log("Not enough food");
             }
-            
-        }
 
     }
 

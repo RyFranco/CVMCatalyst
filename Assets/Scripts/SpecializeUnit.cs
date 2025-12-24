@@ -57,8 +57,8 @@ public class SpecializeUnit : MonoBehaviour
         GameObject.Find("TownHall").GetComponent<UnitMaker>().makeUnit(TrainToThisUnit,trainingPositionNode.transform.position);
         SelectionManager.Instance.AvailableUnits.Remove(unit);
         SelectionManager.Instance.SelectedUnits.Remove(unit);
+        Destroy(unit.UnitPanelScript.gameObject);
         Destroy(unit.gameObject);
-        unit.RemovePanel();
         isTraining = false;
     }
 

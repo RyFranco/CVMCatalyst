@@ -9,12 +9,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public enum UnitState
+public enum ActionState
 {
     Idle,
-    Gathering,
+    MoveToHarvest,
+    Harvesting,
+    Depositing,
     Attacking,
-    MovingToAction,
     Dead
 }
 
@@ -24,21 +25,12 @@ public enum UnitState
 
 public class Unit : MonoBehaviour
 {
-    protected NavMeshAgent agent;
-    [SerializeField]
-    private GameObject selectionSprite;
+    public NavMeshAgent agent;
+    [SerializeField] private GameObject selectionSprite;
     public UnitData unitData;
-    [SerializeField] private protected int currentHealth;
+    [SerializeField] public int currentHealth;
 
     bool isSelected = false;
-    public UnitState currentState = UnitState.Idle;
-    private ResourceTile currentTile;
-    private Coroutine harvestingRoutine;
-
-    [SerializeField] protected Coroutine attackRoutine;
-    [SerializeField] protected Unit attackTarget;
-
-    private ResourceTile lastHarvestTile;
 
     [Header("Inventory")]
     public int MaxInventory = 3;
@@ -52,18 +44,31 @@ public class Unit : MonoBehaviour
     [HideInInspector] public UnitPanelScript UnitPanelScript;
     [HideInInspector] public Animator animator;
 
+    public bool IsInventoryFull() => currentInventory >= MaxInventory;
+
+    protected UnitActionController actionController;
+    public ActionState currentState => actionController.currentState;
+    public Unit currentAttackTarget => actionController.currentAttackTarget;
+    public Building currentBuildingTarget => actionController.currentBuildingTarget;
+
     public virtual void Awake()
     {
-        SelectionManager.Instance.AvailableUnits.Add(this);
         agent = GetComponent<NavMeshAgent>();
+        actionController = GetComponent<UnitActionController>();
         currentHealth = unitData.maxHealth;
         agent.speed = unitData.moveSpeed;
-        Debug.Log(selectionSprite);
+        RegisterInSelectionManager();
     }
+
+    protected virtual void RegisterInSelectionManager()
+    {
+        SelectionManager.Instance.AvailableUnits.Add(this);
+    }
+
 
     public virtual void Update()
     {
-        if(agent.velocity.x > .5f)
+        if (agent.velocity.x > .5f)
         {
             Quaternion newRotation = transform.rotation;
             newRotation.y = 0;
@@ -77,10 +82,10 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            if (attackTarget)
+            if (currentAttackTarget)
             {
-                float Direction = attackTarget.transform.position.x - gameObject.transform.position.x;
-                if(Direction < 0) Direction = -1; else Direction = 1;
+                float Direction = currentAttackTarget.transform.position.x - gameObject.transform.position.x;
+                if (Direction < 0) Direction = -1; else Direction = 1;
 
                 Quaternion newRotation = transform.rotation;
                 newRotation.y = 180 * Direction;
@@ -88,42 +93,34 @@ public class Unit : MonoBehaviour
             }
         }
 
-        
 
-        if(animator) animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
-        if(UnitPanelScript) UnitPanelScript.UpdateBackground(currentState);
 
-        switch (currentState)//Sets Animation based on Unit State
-        {
-            case UnitState.Idle:
-                    animator.SetBool("IsHarvesting", false);
-                    animator.SetBool("IsAttacking",false);
-                    
-                break;
-            case UnitState.Gathering:
-                    animator.SetBool("IsHarvesting", true);
-                    animator.SetBool("IsAttacking",false);
-                break;
-            case UnitState.Attacking:
-                    animator.SetBool("IsHarvesting", false);
-                    animator.SetBool("IsAttacking", true);
-                break;
-            case UnitState.MovingToAction:
-                    animator.SetBool("IsHarvesting", false);
-                    animator.SetBool("IsAttacking", false);
-                break;
-            default:
-                Debug.Log("INVALID UNIT STATE");
-                break;
+        if (animator) animator.SetFloat("Speed", math.abs(agent.velocity.magnitude));
+    }
 
-        }
 
+    public void UpdateAnimation()
+    {
+        if(!animator) return;
+
+        //animator.SetBool("IsMoving", state == ActionState.MoveToHarvest || state == ActionState.Depositing);
+        animator.SetBool("IsHarvesting", currentState == ActionState.Harvesting);
+        animator.SetBool("IsAttacking", currentState == ActionState.Attacking);
+    }
+
+    public void OnActionStateChanged(ActionState state)
+    {
+        UnitPanelScript?.UpdateBackground(state);
+    }
+
+    public void StartHarvesting(ResourceTile tile)
+    {
+        actionController.StartHarvesting(tile);
     }
 
     public void MoveTo(Vector3 pos)
     {
         agent.SetDestination(pos);
-        
     }
 
     public virtual void Select()
@@ -135,7 +132,6 @@ public class Unit : MonoBehaviour
 
     public virtual void Deselect()
     {
-        Debug.Log(name + " Deselected");
         isSelected = false;
         selectionSprite.SetActive(false);
     }
@@ -144,11 +140,8 @@ public class Unit : MonoBehaviour
 
     public void AddResource(ResourceType type, int amount)
     {
-        if (currentInventory + amount > MaxInventory)
-        {
-            Debug.Log($"{name} inventory full! Can’t carry more.");
-            return;
-        }
+        if (currentInventory + amount > MaxInventory) return;
+
 
         if (!carriedResources.ContainsKey(type))
             carriedResources[type] = 0;
@@ -156,94 +149,12 @@ public class Unit : MonoBehaviour
         carriedResources[type] += amount;
         currentInventory += amount;
 
-        Debug.Log($"{name} collected {amount} {type}. Now carrying {currentInventory}/{MaxInventory}");
-    }
-
-
-    public bool isInventoryFull() => currentInventory >= MaxInventory;
-
-
-
-    //HARVESTING
-    public IEnumerator TryStartHarvesting(ResourceTile tile)
-    {
-        //if alreadying harvesting leave
-        if (currentState == UnitState.Gathering)
-            yield break;
-
-
-        Debug.Log($"Trying start harvest at {tile}");
-
-        bool assigned = tile.RequestWork(this);
-
-        if (!assigned)
-        {
-            Debug.Log($"{name} waiting for a free spot");
-            yield break;
-        }
-
-        //We have a spot and now assign it
-        currentTile = tile;
-        lastHarvestTile = tile;
-        currentState = UnitState.MovingToAction;
-
-
-        Vector3 target = tile.GetWorkerSpot(this);
-        agent.isStopped = false;
-        agent.SetDestination(target);
-
-        while (Vector3.Distance(transform.position, target) > 1.5f)
-            yield return null;
-
-
-        currentState = UnitState.Gathering;
-        harvestingRoutine = StartCoroutine(HarvestRoutine(tile));
-
-
 
     }
 
-    private IEnumerator HarvestRoutine(ResourceTile tile)
-    {
-        currentState = UnitState.Gathering;
-        //harvestBar.value = 0f; // STILL NEEDED TO IMPLEMENT BAR
 
 
-        while (tile != null && !isInventoryFull() && currentState == UnitState.Gathering)
-        {
-
-            float harvestTime = tile.baseResourceHarvestTime / unitData.harvestingSpeed;
-            Debug.Log(harvestTime);
-            float timer = 0f;
-
-
-            while (timer < harvestTime)
-            {
-                if (currentState != UnitState.Gathering || tile == null)
-                    yield break;
-
-                timer += Time.deltaTime;
-                //harvestBar.value = timer / harvestTime;
-
-                yield return null;
-            }
-
-
-            tile.Harvest(this);
-
-            if (isInventoryFull()) break;
-        }
-
-        StopAllActions();
-        tile.RemoveWorker(this);
-
-        if (isInventoryFull())
-        {
-            StartCoroutine(DepositRoutine(FindNearestTownHall()));
-        }
-    }
-
-    private GameObject FindNearestTownHall()
+    public GameObject FindNearestTownHall()
     {
         GameObject[] allBuildings = GameObject.FindGameObjectsWithTag("Building");
         GameObject nearestTownHall = null;
@@ -268,38 +179,9 @@ public class Unit : MonoBehaviour
         return nearestTownHall;
     }
 
-    private protected IEnumerator DepositRoutine(GameObject townHall)
-    {
-        currentState = UnitState.MovingToAction;
 
-        //move to townhall
-        agent.isStopped = false;
-        agent.SetDestination(townHall.transform.position);
 
-        //wait till near twon hall
-        while (Vector3.Distance(transform.position, townHall.transform.position) > 5f) yield return null;
-
-        //deposit resources
-        DepositResources(townHall);
-
-        // Resume harvesting
-        if (lastHarvestTile != null)
-        {
-            bool assigned = lastHarvestTile.RequestWork(this);
-
-            if (!assigned)
-            {
-                Debug.Log($"{name} waiting for open spot at {lastHarvestTile.name}");
-                yield break;
-            }
-
-            //worker assigned immediately, go to harvesting spot
-            StartCoroutine(TryStartHarvesting(lastHarvestTile));
-        }
-
-    }
-
-    private protected void DepositResources(GameObject townHall)
+    public void DepositResources(GameObject townHall)
     {
         foreach (var kvp in carriedResources)
         {
@@ -315,111 +197,31 @@ public class Unit : MonoBehaviour
 
     public void StopAllActions()
     {
-        if (harvestingRoutine != null)
-        {
-            StopCoroutine(harvestingRoutine);
-            harvestingRoutine = null;
-        }
-
-        if (attackRoutine != null)
-        {
-            StopCoroutine(attackRoutine);
-            attackRoutine = null;
-        }
-
-        attackTarget = null;
-
-        if (currentTile != null)
-        {
-            currentTile.RemoveWorker(this);
-            currentTile = null;
-        }
-
-        currentState = UnitState.Idle;
+        actionController.ResetAction();
         agent.isStopped = false;
     }
 
-    public virtual void Attack(Unit targetUnit = null, Building targetBuilding = null)
+    public void Attack(Unit targetUnit = null, Building targetBuilding = null)
     {
-        Debug.Log($"{name} is planning to attack.");
         StopAllActions();
-
-        if (targetUnit == null && targetBuilding == null) return;
-
-        currentState = UnitState.Attacking;
 
         if (targetUnit != null)
         {
-            Debug.Log($"{name} choose unit!");
-            attackRoutine = StartCoroutine(AttackRoutine_Unit(targetUnit));
+            actionController.StartAttack(targetUnit);
+            return;
         }
-        else if (targetBuilding != null)
+
+        if (targetBuilding != null)
         {
-            Debug.Log($"{name} choose building!");
-            attackRoutine = StartCoroutine(AttackRoutine_Building(targetBuilding));
+            actionController.StartAttack(targetBuilding);
+            return;
         }
     }
 
-    protected IEnumerator AttackRoutine_Unit(Unit target)
-    {
-        while (target != null && target.currentState != UnitState.Dead && currentState == UnitState.Attacking)
-        {
-            float dist = Vector3.Distance(transform.position, target.transform.position);
-
-            if (dist <= unitData.attackRange)
-            {
-                agent.isStopped = true;
-                target.Damage(unitData.attackDamage);
-                yield return new WaitForSeconds(1/unitData.attacksPerSecond);
-            }
-            else
-            {
-                agent.isStopped = false;
-                agent.SetDestination(target.transform.position);
-                yield return null;
-            }
-        }
-
-        currentState = UnitState.Idle;
-        attackRoutine = null;
-        agent.isStopped = false;
-    }
-
-    private protected IEnumerator AttackRoutine_Building(Building target)
-    {
-        Debug.Log($"{name} attacking building.");
-
-        Collider buildingCollider = target.GetComponent<Collider>();
-
-        while (target != null && currentState == UnitState.Attacking)
-        {
-
-            Vector3 closestPoint = buildingCollider.ClosestPoint(transform.position);
-            float dist = Vector3.Distance(transform.position, closestPoint);
-
-            if (dist <= unitData.attackRange)
-            {
-                Debug.Log($"Closed in!");
-                agent.isStopped = true;
-                target.TakeDamage(unitData.attackDamage);
-                yield return new WaitForSeconds(1/unitData.attacksPerSecond);
-            }
-            else
-            {
-                agent.isStopped = false;
-                agent.SetDestination(target.transform.position);
-                yield return null;
-            }
-        }
-
-        currentState = UnitState.Idle;
-        attackRoutine = null;
-        agent.isStopped = false;
-    }
 
     public virtual void Heal(int amount)
     {
-        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth/(float)unitData.maxHealth);
+        if (UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth / (float)unitData.maxHealth);
         if ((amount + currentHealth) >= unitData.maxHealth)
         {
             currentHealth = unitData.maxHealth;
@@ -427,19 +229,20 @@ public class Unit : MonoBehaviour
         else
         {
             currentHealth += amount;
-            
+
         }
     }
 
     public virtual void Damage(int amount)
     {
-        if (!attackTarget && currentState == UnitState.Idle) LookForEnemy();
+        if (!currentAttackTarget) LookForEnemy();
 
         currentHealth -= amount;
-        if(UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth/(float)unitData.maxHealth);
+        if (UnitPanelScript) UnitPanelScript.UpdateHealthIndicator(currentHealth / (float)unitData.maxHealth);
         Debug.Log($"{name} took {amount} damage and has {currentHealth} remaining");
         if (currentHealth <= 0)
         {
+            Debug.Log($"{name} should have died");
             currentHealth = 0;
             Die();
         }
@@ -447,13 +250,15 @@ public class Unit : MonoBehaviour
 
     void LookForEnemy()
     {
+
+        Debug.Log("HIHIHI");
         //Finds all units, then removes units on same team
         List<GameObject> AllUnitsList = GameObject.FindGameObjectsWithTag("Unit").ToList();
         List<GameObject> EnemyUnits = new List<GameObject>();
 
         foreach (var UnitinList in AllUnitsList)
         {
-            if(UnitinList.GetComponent<Unit>().playerID != playerID)
+            if (UnitinList.GetComponent<Unit>().playerID != playerID)
             {
                 EnemyUnits.Add(UnitinList);
             }
@@ -463,7 +268,7 @@ public class Unit : MonoBehaviour
         GameObject nearestEnemy = null;
         float NearestEnemyDistance = 9999;
 
-        foreach(GameObject Enemy in EnemyUnits)
+        foreach (GameObject Enemy in EnemyUnits)
         {
             float currentDistance = Vector3.Distance(transform.position, Enemy.transform.position);
             if (currentDistance < NearestEnemyDistance && currentDistance <= unitData.sightRange)
@@ -478,31 +283,25 @@ public class Unit : MonoBehaviour
             StopAllActions();
             Attack(nearestEnemy.GetComponent<Unit>());
         }
-        
+
     }
 
-    void Die()
+    public virtual void Die()
     {
-        if (SelectionManager.Instance != null)
+        //remove from unit pool in selectionManager
+        SelectionManager.Instance.AvailableUnits.Remove(this);
+        SelectionManager.Instance.SelectedUnits.Remove(this);
+    
+       //change state to dead, prevents other action like attacking from being done post mortem 
+        actionController.Dead();
+
+        //Destroy the panel associated with unit
+        if (UnitPanelScript.gameObject)
         {
-            SelectionManager.Instance.AvailableUnits.Remove(this);
-            SelectionManager.Instance.SelectedUnits.Remove(this);
+            Destroy(UnitPanelScript.gameObject); 
         }
-
-        currentState = UnitState.Dead;
-
-        //foreach()
-
-        //List <GameObject> EnemyList = GameObject.FindGameObjectsWithTag("Unit");
-        RemovePanel();
         Destroy(gameObject);
-        
-        Debug.Log($"{name} has died!");
-    }
 
-    public void RemovePanel()
-    {
-        Destroy(UnitPanelScript.gameObject);
     }
 
 }
