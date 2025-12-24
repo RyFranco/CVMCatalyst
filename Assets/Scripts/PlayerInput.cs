@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -145,13 +147,42 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
 
-                foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
-                {
-                    unit.StopAllActions();
-                    unit.MoveTo(hit.point);
-                }
+                MoveToGrid(hit.point, SelectionManager.Instance.SelectedUnits);
+
             }
         }
+    }
+
+    void MoveToGrid(Vector3 CenterPoint, HashSet<Unit> UnitList)
+    {
+        int GridSize = (int)Math.Ceiling(Math.Sqrt(UnitList.Count));
+        Debug.Log("GridSize = " + GridSize);
+        int UnitCount = UnitList.Count;
+        Debug.Log("UnitCount = " + UnitCount);
+        float GridSpacing = 1.5f;
+
+        List<Vector3> LocationList = new List<Vector3>();
+
+        for(int y = 0; y < GridSize; y++)
+        {
+            for(int x = 0; x < GridSize; x++)
+            {
+                Vector3 Destination = new Vector3(CenterPoint.x + (GridSpacing*x), CenterPoint.y ,CenterPoint.z + (GridSpacing*y)); 
+                Destination -= new Vector3((GridSpacing * GridSize)/2, 0, (GridSpacing * GridSize)/2);
+                if(x%2 ==1) Destination += new Vector3(0,0,GridSpacing/2);
+                LocationList.Add(Destination);
+
+            }
+        }
+        int locationNum = 0;
+        foreach (Unit unit in UnitList)
+        {
+            unit.StopAllActions();
+            unit.MoveTo(LocationList[locationNum]);
+            locationNum++;
+        }
+
+
     }
 
     void HandleSelectionInputs()

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using System;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class HexGridLayout : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class HexGridLayout : MonoBehaviour
     public Vector2Int gridSize;
     public GameObject hex;
     private NavMeshSurface surface;
-    public int MinionBuildingInteral = 5;
+    public int MinionBuildingInterval = 5;
 
     [Header("Tile Prefabs and Chances")]
     public List<TileSpawnChance> tileSpawnChances; 
@@ -96,14 +97,22 @@ public class HexGridLayout : MonoBehaviour
 
     private void FindBuildingSpawnpoints() //Fills list with positions for Minion Buildings
     {
-        for (int i = gridSize.y; i > 0; i--)
+        for (int i = gridSize.y; i > 0; i--)//Starts at the last row then goes up
         {
-            if(i % MinionBuildingInteral == 0)
+            if(i % MinionBuildingInterval == 0) //Only builds on every X row where X is MinionBuildingInterval Interval
             {
-                BuildingPositions.Add(new Vector2( UnityEngine.Random.Range(0,gridSize.x -1), i - 1));
+                List<int> ValidXPositions = Enumerable.Range(0, gridSize.x).ToList(); //make a list of valid x positions
+
+                //build position needs to pull and remove from the list
+                for (int j = 0; j < i/MinionBuildingInterval && j < gridSize.x; j++)
+                {
+                    int ChosenXIndex = UnityEngine.Random.Range(0,ValidXPositions.Count);
+                    BuildingPositions.Add(new Vector2(ValidXPositions[ChosenXIndex], i - 1));
+                    ValidXPositions.RemoveAt(ChosenXIndex);
+                    
+                }
             }
         }
-
     }
 
     private void SpawnMinions()
