@@ -1,5 +1,16 @@
 using UnityEngine;
 
+
+public enum ActionState
+{
+    Idle,
+    MoveToHarvest,
+    Harvesting,
+    Depositing,
+    Attacking,
+    Dead
+}
+
 public class UnitActionController : MonoBehaviour
 {
 
@@ -122,7 +133,7 @@ public class UnitActionController : MonoBehaviour
         }
 
         harvestTimer += Time.deltaTime;
-        float timeToHarvest = harvestTile.baseResourceHarvestTime / unit.unitData.harvestingSpeed;
+        float timeToHarvest = harvestTile.baseResourceHarvestTime / unit.harvestingSpeed;
 
         if (harvestTimer >= timeToHarvest)
         {
@@ -183,7 +194,7 @@ public class UnitActionController : MonoBehaviour
 
             float dist = Vector3.Distance(unit.transform.position, currentAttackTarget.transform.position);
 
-            if (dist > unit.unitData.attackRange)
+            if (dist > unit.attackRange)
             {
                 unit.agent.SetDestination(currentAttackTarget.transform.position);
                 return;
@@ -194,8 +205,8 @@ public class UnitActionController : MonoBehaviour
                 attackCooldown -= Time.deltaTime;
                 if (attackCooldown <= 0f)
                 {
-                    currentAttackTarget.Damage(unit.unitData.attackDamage);
-                    attackCooldown = 1f / unit.unitData.attacksPerSecond;
+                    currentAttackTarget.Damage(unit.attackDamage);
+                    attackCooldown = 1f / unit.attacksPerSecond;
                 }
                 return;
             }
@@ -209,7 +220,7 @@ public class UnitActionController : MonoBehaviour
                 currentBuildingTarget.GetComponent<Collider>().ClosestPoint(unit.transform.position)
             );
 
-            if (dist > unit.unitData.attackRange)
+            if (dist > unit.attackRange)
             {
                 unit.agent.isStopped = false;
                 unit.agent.SetDestination(currentBuildingTarget.transform.position);
@@ -222,8 +233,8 @@ public class UnitActionController : MonoBehaviour
                 attackCooldown -= Time.deltaTime;
                 if (attackCooldown <= 0f)
                 {
-                    currentBuildingTarget.TakeDamage(unit.unitData.attackDamage);
-                    attackCooldown = 1f / unit.unitData.attacksPerSecond;
+                    currentBuildingTarget.TakeDamage(unit.attackDamage);
+                    attackCooldown = 1f / unit.attacksPerSecond;
                 }
                 return;
             }

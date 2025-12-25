@@ -29,7 +29,7 @@ public class UnitMaker : MonoBehaviour
                 Unit unit = unitObj.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    unit.playerID = playerID;
+                    unit.playerOwnerID = playerID;
 
                     //Assign and creates an additional UI Panel
 
@@ -57,11 +57,12 @@ public class UnitMaker : MonoBehaviour
 
     public void makeUnit(GameObject UnitToMake, Vector3 spawnPoint)//Overload makeUnit for Specialization Buildings
     {
+        Debug.Log("IM here");
         GameObject unitObj = Instantiate(UnitToMake, spawnPoint, quaternion.identity);
         Unit unit = unitObj.GetComponent<Unit>();
         if (unit != null)
         {
-            unit.playerID = playerID;
+            unit.playerOwnerID = playerID;
             //Assign and creates an additional UI Panel
             //CREATES AND ASSIGNS UI PANELS FOR NEW UNIT
             GameObject UIGridParent =  UnitUIScript.Grid; //Grid - to let the uipane

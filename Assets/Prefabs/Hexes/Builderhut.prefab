@@ -127,6 +127,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -148,9 +150,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &707843854139911618
 MonoBehaviour:
@@ -307,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingData: {fileID: 11400000, guid: b1ca383595c82a14280282b5b7279c14, type: 2}
+  UICanvas: {fileID: 0}
   playerID: 0
 --- !u!1 &2111809018631057368
 GameObject:
@@ -1092,6 +1097,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1113,9 +1120,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2706556837140981625
 MeshFilter:
@@ -1690,6 +1699,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1711,9 +1722,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &7676697222460001971
 MeshFilter:
@@ -1787,6 +1800,7 @@ GameObject:
   - component: {fileID: 2778582383836477763}
   - component: {fileID: 2521958746563164227}
   - component: {fileID: 1798207237989929079}
+  - component: {fileID: 1051488534042464193}
   m_Layer: 0
   m_Name: Building
   m_TagString: Building
@@ -1825,6 +1839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingData: {fileID: 11400000, guid: b1ca383595c82a14280282b5b7279c14, type: 2}
+  UICanvas: {fileID: 0}
   playerID: 0
 --- !u!114 &1798207237989929079
 MonoBehaviour:
@@ -1842,6 +1857,25 @@ MonoBehaviour:
   TrainToThisUnit: {fileID: 7192625611929617496, guid: 06f332f64ba3cb14e884a0548a452b3a, type: 3}
   trainingPositionNode: {fileID: 5832808021287227526}
   isTraining: 0
+--- !u!114 &1051488534042464193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033456374686238881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a5d16eabb9f354aa98063d76946faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitMaker
+  unitPrefabs:
+  - {fileID: 0}
+  playerID: 0
+  UIUnitPanel: {fileID: 0}
+  UnitUIObject: {fileID: 0}
+  UnitUIScript: {fileID: 0}
+  spawnNode: {fileID: 0}
 --- !u!1001 &2296129281182047177
 PrefabInstance:
   m_ObjectHideFlags: 0

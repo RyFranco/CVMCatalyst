@@ -225,6 +225,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -246,9 +248,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5808726073586298823
 GameObject:
@@ -448,17 +452,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d6aba6e9188ae4f9bd3060d9d4c035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionSprite: {fileID: 7640302703263808049}
   unitData: {fileID: 11400000, guid: 9941d3f7aa8c82242af9800f4890443c, type: 2}
-  currentHealth: 0
-  currentState: 0
-  attackTarget: {fileID: 0}
-  MaxInventory: 3
-  playerID: 1
-  harvestBarCanvas: {fileID: 2044650655924544813}
-  harvestBar: {fileID: 1915673182810429942}
-  UnitPanelScript: {fileID: 0}
+  playerOwnerID: 0
+  selectionIndicatorSprite: {fileID: 7640302703263808049}
   animator: {fileID: 406256639388580990}
+  UnitPanelScript: {fileID: 0}
+  agent: {fileID: 0}
+  currentHarvestTile: {fileID: 0}
 --- !u!195 &506696503065558067
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -549,6 +549,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &8453398786676876273
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -567,6 +568,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -588,9 +591,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 520627799, guid: 85ede0a02ef685e40bbf783f44233ae8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -600,7 +605,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &3177515997926600872
 Animator:
@@ -709,7 +713,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6748889560655699950}
   - component: {fileID: 1255055873315941042}
-  - component: {fileID: 6163842985782639929}
   - component: {fileID: 406256639388580990}
   m_Layer: 6
   m_Name: Sprite
@@ -735,6 +738,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1255055873315941042
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -753,6 +757,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -774,9 +780,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 450124968, guid: 185ec43d38f62b341b096f080e02cd84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -786,26 +794,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6163842985782639929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8729796821445450785}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eddbf8c8d54d4264eb56c3d167010399, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseDistance: 5
-  scaleMultiplier: 1
-  minDistance: 10
-  maxDistance: 50
-  minScale: 0.01
-  maxScale: 0.04
 --- !u!95 &406256639388580990
 Animator:
   serializedVersion: 7

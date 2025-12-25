@@ -13,7 +13,7 @@ public class UnitEnemyScript : Unit
     {
         base.Awake();
         Zone.GetComponent<EnemyZoneScript>().Owner = gameObject;
-        playerID = 1;
+        playerOwnerID = 1;
         Zone.transform.localScale = new Vector3(unitData.sightRange * 5, Zone.transform.localScale.y, unitData.sightRange * 5);
     }
 

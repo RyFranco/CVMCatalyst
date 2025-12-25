@@ -19,7 +19,7 @@ public class EnemyZoneScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Unit" && other.gameObject.GetComponent<Unit>()) //checks if collision is a valid unit SHOULD only get creatures
         {
-            if(other.gameObject.GetComponent<Unit>().playerID == 0){
+            if(other.gameObject.GetComponent<Unit>().playerOwnerID == 0){
                 Debug.Log(other.gameObject.name + " YOU'RE TOO CLOSE");
                 Owner.GetComponent<UnitEnemyScript>().Intruders.Add(other.gameObject.GetComponent<Unit>());
             }
@@ -30,7 +30,7 @@ public class EnemyZoneScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Unit" && other.gameObject.GetComponent<Unit>()) //checks if collision is a valid unit SHOULD only get creatures
         {
-            if(other.gameObject.GetComponent<Unit>().playerID == 0){
+            if(other.gameObject.GetComponent<Unit>().playerOwnerID == 0){
                 Debug.Log(other.gameObject.name + " YOU'RE SAFE FOR NOW");
                 Owner.GetComponent<UnitEnemyScript>().Intruders.Remove(other.gameObject.GetComponent<Unit>());
             }

@@ -118,7 +118,7 @@ public class PlayerInput : MonoBehaviour
                 Unit targetUnit = hit.collider.GetComponent<Unit>();
                 if (targetUnit != null)
                 {
-                    if (targetUnit.playerID != 0)
+                    if (targetUnit.playerOwnerID != 0)
                     {
 
                         foreach (Unit unit in SelectionManager.Instance.SelectedUnits)
@@ -156,9 +156,7 @@ public class PlayerInput : MonoBehaviour
     void MoveToGrid(Vector3 CenterPoint, HashSet<Unit> UnitList)
     {
         int GridSize = (int)Math.Ceiling(Math.Sqrt(UnitList.Count));
-        Debug.Log("GridSize = " + GridSize);
         int UnitCount = UnitList.Count;
-        Debug.Log("UnitCount = " + UnitCount);
         float GridSpacing = 1.5f;
 
         List<Vector3> LocationList = new List<Vector3>();
@@ -211,7 +209,7 @@ public class PlayerInput : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, unitLayer)
                 && hit.collider.TryGetComponent<Unit>(out Unit unit))
             {
-                if (unit.playerID != 0) return;
+                if (unit.playerOwnerID != 0) return;
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
                     if (SelectionManager.Instance.IsSelected(unit))

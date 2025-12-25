@@ -31,6 +31,7 @@ public class UnitData : ScriptableObject
 
     [Header("Gathering")]
     [SerializeField] public float harvestingSpeed = 1f;
+    [SerializeField] public int maxInventory = 1;
 
 
 

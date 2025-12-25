@@ -954,10 +954,10 @@ MonoBehaviour:
   buildMenuUi: {fileID: 528182479}
   selectedBuilding: {fileID: 0}
   buildingList:
-  - {fileID: 4866350320822589613, guid: a1bd5147ad6720340bbf1e5226db1e9a, type: 3}
+  - {fileID: 6017859635971001548, guid: a043725a4de4b2e4b9afe5fada40b5a3, type: 3}
   - {fileID: 1965838146203723841, guid: 631a933118d1b8a46b03413b4dbad801, type: 3}
   buildingListTransparent:
-  - {fileID: 0}
+  - {fileID: 6017859635971001548, guid: a043725a4de4b2e4b9afe5fada40b5a3, type: 3}
   - {fileID: 1965838146203723841, guid: f685c39b57ea41c47b1ce066c45e7e43, type: 3}
 --- !u!114 &400209462
 MonoBehaviour:
@@ -4967,7 +4967,7 @@ MonoBehaviour:
   - tilePrefab: {fileID: 4866350320822589613, guid: 249c224252641614c9f89d59fa376462, type: 3}
     spawnChance: 0.1
   defaultTilePrefab: {fileID: 4866350320822589613, guid: c1d37dd938fb17248b83433aa7c3fccd, type: 3}
-  minionBuilding: {fileID: 6017859635971001548, guid: a043725a4de4b2e4b9afe5fada40b5a3, type: 3}
+  minionBuilding: {fileID: 6017859635971001548, guid: 119edfc7b121b1845a4219fd12c3dee4, type: 3}
   minion: {fileID: 7192625611929617496, guid: 0e347ec691f68e746aaef800a52106fe, type: 3}
   minionSpawnChance: 1
   positions: []

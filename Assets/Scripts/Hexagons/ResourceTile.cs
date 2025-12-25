@@ -91,7 +91,7 @@ public class ResourceTile : MonoBehaviour
 
     public void Harvest(Unit worker)
     {
-        worker.AddResource(resourceType, 1);
+        worker.AddResourceToUnitInventory(resourceType, 1);
     }
 
    public Vector3 GetWorkerSpot(Unit unit)

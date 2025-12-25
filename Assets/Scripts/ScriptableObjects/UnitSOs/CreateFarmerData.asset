@@ -21,6 +21,7 @@ MonoBehaviour:
   moveSpeed: 6
   sightRange: 10
   attackRange: 1.5
-  attackDamage: 10
+  attackDamage: 1
   attacksPerSecond: 0.333
-  harvestingSpeed: 3
+  harvestingSpeed: 2
+  maxInventory: 5
